@@ -1,0 +1,57 @@
+<!-- @dsCard group="Pages" height=760 width=1280 page subtitle="The overview page: everything above, assembled" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Dashboard — showcase</title>
+<style>
+  .app { display: flex; min-height: 760px; }
+  .main { flex: 1; min-width: 0; padding: 28px 32px; display: flex; flex-direction: column; gap: 20px; }
+  .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .top h1 { margin: 0; font-size: 24px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em; }
+  .top p { margin: 2px 0 0; font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .charts { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+  .bottom { display: grid; grid-template-columns: 1fr 1fr 0.8fr; gap: 16px; }
+  .ringcard { display: flex; align-items: center; justify-content: space-around; gap: 16px; }
+</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  var days = []; for (var i = 1; i <= 30; i++) days.push('Sep ' + i);
+  var thisMonth = [2980, 3120, 3040, 3410, 3620, 3380, 2890, 3050, 3460, 3720, 3910, 3660, 3240, 3080, 3540, 3880, 4120, 4010, 3590, 3310, 3780, 4160, 4420, 4280, 3870, 3620, 4010, 4390, 4610, 4218];
+  var lastMonth = [3350, 3280, 3410, 3520, 3610, 3480, 3220, 3290, 3440, 3560, 3690, 3610, 3380, 3300, 3450, 3580, 3700, 3650, 3400, 3330, 3480, 3610, 3740, 3700, 3450, 3380, 3520, 3640, 3760, 3700];
+  var weeks = ['W36', 'W37', 'W38', 'W39', 'W40', 'W41'];
+  var hours = []; for (var j = 0; j < 24; j++) hours.push((j < 10 ? '0' : '') + j + ':00');
+  var tokens = [410, 380, 350, 330, 320, 340, 420, 610, 840, 1020, 1180, 1240, 1210, 1260, 1310, 1290, 1220, 1140, 980, 860, 760, 640, 540, 460].map(function (v) { return v * 1000; });
+  var nav = [
+    { id: 'overview', label: 'Overview', icon: 'overview' }, { id: 'spend', label: 'Spend', icon: 'spend' }, { id: 'models', label: 'Models', icon: 'model' },
+    { id: 'sensors', label: 'Sensors', icon: 'sensors' }, { id: 'data', label: 'Data', icon: 'data' }, { id: 'locations', label: 'Locations', icon: 'location' },
+    { id: 'alerts', label: 'Alerts', icon: 'alerts', badge: 3 }, { section: 'Workspace' }, { id: 'people', label: 'People', icon: 'people' }, { id: 'settings', label: 'Settings', icon: 'settings' }];
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'app' },
+    h(A.Sidebar, { items: nav, footer: h(A.Badge, { tone: 'live' }, 'All systems live') }),
+    h('div', { className: 'main' },
+      h('div', { className: 'top' },
+        h('div', null, h('h1', null, 'Overview'), h('p', null, 'AI spend telemetry across 12,428 sensors, in real time')),
+        h('div', { className: 'amb-row' }, h(A.Select, { size: 'sm', label: 'Time range', options: ['Last 24 hours', 'Last 7 days', 'Last 30 days'] }), h(A.Button, { variant: 'secondary', size: 'sm', icon: 'download' }, 'Export'), h(A.Button, { variant: 'primary', size: 'sm', icon: 'plus' }, 'Add budget'))),
+      h('div', { className: 'stats' },
+        h(A.Card, { compact: true }, h(A.Stat, { label: 'Spend this month', value: 128400, prefix: '$', hero: true, delta: -8.2, upIsGood: false, period: 'vs Aug' })),
+        h(A.Card, { compact: true }, h(A.Stat, { label: 'Spend today', value: 4218, prefix: '$', delta: 12, upIsGood: false, period: 'vs yesterday', trend: [31, 33, 30, 34, 36, 35, 38, 40, 39, 43, 45, 42] })),
+        h(A.Card, { compact: true }, h(A.Stat, { label: 'Tokens / sec', value: 1300000, delta: 23, period: 'vs 24h', trend: [38, 42, 40, 47, 45, 52, 58, 55, 61, 64, 62, 70] })),
+        h(A.Card, { compact: true }, h(A.Stat, { label: 'Active models', value: 42, delta: 5, period: 'this week', caption: '6 providers' }))),
+      h('div', { className: 'charts' },
+        h(A.Card, { title: 'Daily spend', subtitle: 'September, compared with August', action: h(A.Badge, { tone: 'live' }, 'Live') },
+          h(A.LineChart, { title: 'Daily spend', prefix: '$', labels: days, series: [{ name: 'September', values: thisMonth }, { name: 'August', values: lastMonth }], height: 200 })),
+        h(A.Card, { title: 'Spend by token type', subtitle: 'Weekly' },
+          h(A.BarChart, { title: 'Spend by token type', prefix: '$', labels: weeks, series: [{ name: 'Output', values: [14200, 15800, 15100, 17400, 19100, 20600] }, { name: 'Input', values: [8200, 8900, 8600, 9800, 10400, 11200] }], height: 200 }))),
+      h('div', { className: 'bottom' },
+        h(A.Card, { title: 'Top models by spend', subtitle: 'This month' },
+          h(A.BarChart, { title: 'Top models by spend', prefix: '$', horizontal: true, valueLabels: true, labelWidth: 96, labels: ['sonnet-4.5', 'gpt-5', 'gemini-2.5', 'haiku-4.5'], series: [{ name: 'Spend', values: [48200, 31600, 19400, 12800] }], height: 150 })),
+        h(A.Card, { title: 'Tokens per second', subtitle: 'Last 24 hours' },
+          h(A.LineChart, { title: 'Tokens per second', labels: hours, series: [{ name: 'Tokens / sec', values: tokens }], height: 150, valueLabel: 'Tokens / sec' })),
+        h(A.Card, { title: 'Health', subtitle: 'Last 90 days' },
+          h('div', { className: 'ringcard' }, h(A.Ring, { value: 99.99, label: 'Uptime', size: 104 }), h(A.Ring, { value: 64, label: 'Budget used', text: '64%', size: 104 })))))
+  ));
+</script>
+</body>
+</html>

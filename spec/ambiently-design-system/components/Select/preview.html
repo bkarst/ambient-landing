@@ -1,0 +1,19 @@
+<!-- @dsCard group="Actions" height=80 subtitle="A native select with the system chrome; the time-range control of every chart" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Select — preview</title>
+<style>.wrap { padding: 20px 24px; }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  var ranges = ['Last 24 hours', 'Last 7 days', 'Last 30 days', 'This quarter'];
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap amb-row' },
+    h(A.Select, { label: 'Time range', options: ranges, defaultValue: 'Last 24 hours' }),
+    h(A.Select, { label: 'Time range', size: 'sm', options: ranges, defaultValue: 'Last 7 days' }),
+    h(A.Select, { label: 'Group by', options: [{ value: 'model', label: 'By model' }, { value: 'team', label: 'By team' }, { value: 'provider', label: 'By provider' }] })
+  ));
+</script>
+</body>
+</html>

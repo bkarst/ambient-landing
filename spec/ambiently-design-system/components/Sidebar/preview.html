@@ -1,0 +1,28 @@
+<!-- @dsCard group="Layout" height=560 subtitle="Sunken surface, the lockup on top, 40px nav items; the active glyph takes the accent" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Sidebar — preview</title>
+<style>.wrap { display: flex; height: 560px; } .page { flex: 1; padding: 24px; color: var(--ink-muted); font-size: 13px; }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap' },
+    h(A.Sidebar, { items: [
+      { id: 'overview', label: 'Overview', icon: 'overview' },
+      { id: 'spend', label: 'Spend', icon: 'spend' },
+      { id: 'models', label: 'Models', icon: 'model' },
+      { id: 'sensors', label: 'Sensors', icon: 'sensors' },
+      { id: 'data', label: 'Data', icon: 'data' },
+      { id: 'locations', label: 'Locations', icon: 'location' },
+      { id: 'alerts', label: 'Alerts', icon: 'alerts', badge: 3 },
+      { section: 'Workspace' },
+      { id: 'people', label: 'People', icon: 'people' },
+      { id: 'settings', label: 'Settings', icon: 'settings' }
+    ], footer: h(A.Badge, { tone: 'live' }, 'All systems live') }),
+    h('div', { className: 'page' }, 'Page content')
+  ));
+</script>
+</body>
+</html>

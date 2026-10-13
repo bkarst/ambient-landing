@@ -1,0 +1,19 @@
+<!-- @dsCard group="Data" height=190 subtitle="Label, value, delta and a 12-point sparkline; one hero figure per view" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Stat — preview</title>
+<style>.wrap { padding: 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap' },
+    h(A.Card, { compact: true }, h(A.Stat, { label: 'Spend this month', value: 128400, prefix: '$', hero: true, delta: -8.2, upIsGood: false, period: 'vs last month' })),
+    h(A.Card, { compact: true }, h(A.Stat, { label: 'Tokens / sec', value: 1300000, delta: 23, period: 'vs 24h', trend: [38, 42, 40, 47, 45, 52, 58, 55, 61, 64, 62, 70] })),
+    h(A.Card, { compact: true }, h(A.Stat, { label: 'Active sensors', value: 12428, delta: 12, period: 'vs 24h', trend: [20, 22, 21, 25, 24, 27, 26, 29, 31, 30, 33, 34] })),
+    h(A.Card, { compact: true }, h(A.Stat, { label: 'Uptime', value: '99.99', unit: '%', caption: 'last 90 days' }))
+  ));
+</script>
+</body>
+</html>

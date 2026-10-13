@@ -1,0 +1,21 @@
+<!-- @dsCard group="Status" height=72 subtitle="Neutral, accent, positive, negative, outline and live" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Badge — preview</title>
+<style>.wrap { padding: 20px 24px; }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap amb-row' },
+    h(A.Badge, null, 'Production'),
+    h(A.Badge, { tone: 'accent' }, 'New'),
+    h(A.Badge, { tone: 'positive', icon: 'check' }, 'Under budget'),
+    h(A.Badge, { tone: 'negative', icon: 'alerts' }, 'Over budget'),
+    h(A.Badge, { tone: 'outline' }, 'us-east-1'),
+    h(A.Badge, { tone: 'live' }, 'Live')
+  ));
+</script>
+</body>
+</html>

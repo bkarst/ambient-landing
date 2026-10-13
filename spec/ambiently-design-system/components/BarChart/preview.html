@@ -1,0 +1,22 @@
+<!-- @dsCard group="Data" height=380 subtitle="Grouped and stacked columns, a ranked horizontal bar; 24px max, rounded data end, 2px surface gaps" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>BarChart — preview</title>
+<style>.wrap { padding: 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  var weeks = ['W36', 'W37', 'W38', 'W39', 'W40', 'W41'];
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap' },
+    h(A.Card, { title: 'Spend by token type', subtitle: 'Weekly, last six weeks' },
+      h(A.BarChart, { title: 'Spend by token type', prefix: '$', labels: weeks, series: [{ name: 'Output', values: [14200, 15800, 15100, 17400, 19100, 20600] }, { name: 'Input', values: [8200, 8900, 8600, 9800, 10400, 11200] }], height: 230 })),
+    h(A.Card, { title: 'Spend by workload', subtitle: 'Weekly, stacked' },
+      h(A.BarChart, { title: 'Spend by workload', prefix: '$', stacked: true, labels: weeks, series: [{ name: 'Assistant', values: [9100, 9800, 9400, 11200, 12600, 13400] }, { name: 'Search', values: [7400, 8100, 7900, 8700, 9200, 9900] }, { name: 'Agents', values: [5900, 6800, 6400, 7300, 7700, 8500] }], height: 230 })),
+    h(A.Card, { title: 'Top models by spend', subtitle: 'This month' },
+      h(A.BarChart, { title: 'Top models by spend', prefix: '$', horizontal: true, valueLabels: true, labelWidth: 104, labels: ['sonnet-4.5', 'gpt-5', 'gemini-2.5', 'haiku-4.5', 'opus-4.1'], series: [{ name: 'Spend', values: [48200, 31600, 19400, 12800, 9100] }], height: 230 }))
+  ));
+</script>
+</body>
+</html>

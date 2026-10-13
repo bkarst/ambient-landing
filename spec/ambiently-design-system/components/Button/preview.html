@@ -1,0 +1,28 @@
+<!-- @dsCard group="Actions" height=150 subtitle="Primary, secondary, ghost and danger, in three sizes" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Button — preview</title>
+<style>.wrap { padding: 24px; display: flex; flex-direction: column; gap: 16px; }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap' },
+    h('div', { className: 'amb-row' },
+      h(A.Button, { variant: 'primary', iconAfter: 'arrow-right' }, 'Get started'),
+      h(A.Button, { variant: 'secondary', icon: 'play' }, 'Watch video'),
+      h(A.Button, { variant: 'ghost' }, 'Learn more'),
+      h(A.Button, { variant: 'danger' }, 'Delete key'),
+      h(A.Button, { variant: 'primary', disabled: true }, 'Disabled'),
+      h(A.Button, { variant: 'secondary', disabled: true }, 'Disabled')),
+    h('div', { className: 'amb-row' },
+      h(A.Button, { variant: 'primary', size: 'sm' }, 'Small'),
+      h(A.Button, { variant: 'primary', size: 'md' }, 'Medium'),
+      h(A.Button, { variant: 'primary', size: 'lg' }, 'Large'),
+      h(A.Button, { variant: 'secondary', size: 'sm', icon: 'download' }, 'Export CSV'),
+      h(A.Button, { variant: 'secondary', size: 'lg', icon: 'plus' }, 'Add sensor'))
+  ));
+</script>
+</body>
+</html>

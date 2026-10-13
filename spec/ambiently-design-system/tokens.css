@@ -1,0 +1,104 @@
+/* Ambiently — generated from tokens.json */
+:root, [data-theme="dark"] {
+  --surface: #0b1b3d;
+  --surface-sunken: #071430;
+  --surface-raised: #112349;
+  --surface-hover: #182f5e;
+  --line: #ffffff14;
+  --line-strong: #8a94a6;
+  --knob: #ffffff;
+  --ink: #ffffff;
+  --ink-secondary: #c3c9d6;
+  --ink-muted: #8a94a6;
+  --ink-disabled: #ffffff59;
+  --accent: #ffe600;
+  --accent-hover: #f2d900;
+  --on-accent: #000000;
+  --accent-ink: #ffe600;
+  --accent-soft: #ffe6001f;
+  --gold: #f9bb01;
+  --positive: #34d399;
+  --positive-soft: #34d3991f;
+  --negative: #fb7185;
+  --negative-soft: #fb71851f;
+  --chart-1: #ffe600;
+  --chart-2: #8a94a6;
+  --chart-3: #ffffff;
+  --chart-grid: var(--line);
+  --chart-track: var(--surface-sunken);
+  --shadow-card: none;
+  --shadow-float: 0 12px 32px #00000080;
+  --focus-ring: 0 0 0 2px #0b1b3d, 0 0 0 4px #ffe600;
+}
+[data-theme="light"] {
+  --surface: #f5f6f8;
+  --surface-sunken: #eceef2;
+  --surface-raised: #ffffff;
+  --surface-hover: #e6e9ee;
+  --line: #0b1b3d14;
+  --line-strong: #828c9e;
+  --knob: #ffffff;
+  --ink: #0b1b3d;
+  --ink-secondary: #3f4a5f;
+  --ink-muted: #5e6878;
+  --ink-disabled: #0b1b3d59;
+  --accent: #ffe600;
+  --accent-hover: #f2d900;
+  --on-accent: #000000;
+  --accent-ink: #6e5c00;
+  --accent-soft: #fff6b3;
+  --gold: #f9bb01;
+  --positive: #047857;
+  --positive-soft: #d1fae5;
+  --negative: #be123c;
+  --negative-soft: #ffe4e6;
+  --chart-1: #0b1b3d;
+  --chart-2: #6b7585;
+  --chart-3: #b8860b;
+  --chart-grid: var(--line);
+  --chart-track: var(--surface-sunken);
+  --shadow-card: 0 1px 2px #0b1b3d0a, 0 4px 16px #0b1b3d0f;
+  --shadow-float: 0 1px 2px #0b1b3d0f, 0 12px 32px #0b1b3d1f;
+  --focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px #0b1b3d;
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --control-sm: 32px;
+  --control-md: 40px;
+  --control-lg: 48px;
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --font-sans: "Inter", -apple-system, "SF Pro Text", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@font-face { font-family: "Inter"; src: url("fonts/Inter-Variable-Latin.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-Variable-LatinExt.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+.display { font-family: var(--font-sans); font-size: 56px; line-height: 60px; font-weight: 600; letter-spacing: -0.02em; }
+.title-1 { font-family: var(--font-sans); font-size: 34px; line-height: 40px; font-weight: 600; letter-spacing: -0.015em; }
+.title-2 { font-family: var(--font-sans); font-size: 24px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em; }
+.title-3 { font-family: var(--font-sans); font-size: 20px; line-height: 26px; font-weight: 600; letter-spacing: -0.005em; }
+.headline { font-family: var(--font-sans); font-size: 17px; line-height: 24px; font-weight: 600; }
+.body-large { font-family: var(--font-sans); font-size: 17px; line-height: 26px; font-weight: 400; }
+.body { font-family: var(--font-sans); font-size: 15px; line-height: 22px; font-weight: 400; }
+.label { font-family: var(--font-sans); font-size: 13px; line-height: 18px; font-weight: 500; }
+.caption { font-family: var(--font-sans); font-size: 12px; line-height: 16px; font-weight: 500; }
+.overline { font-family: var(--font-sans); font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.12em; }
+.stat-large { font-family: var(--font-sans); font-size: 44px; line-height: 48px; font-weight: 600; letter-spacing: -0.025em; }
+.stat { font-family: var(--font-sans); font-size: 28px; line-height: 32px; font-weight: 600; letter-spacing: -0.02em; }
+.tabular { font-family: var(--font-sans); font-size: 13px; line-height: 18px; font-weight: 500; }
+.code { font-family: var(--font-mono); font-size: 13px; line-height: 20px; font-weight: 400; }

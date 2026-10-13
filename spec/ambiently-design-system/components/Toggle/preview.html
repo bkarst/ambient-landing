@@ -1,0 +1,19 @@
+<!-- @dsCard group="Actions" height=80 subtitle="A switch: accent when on, steel when off" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Toggle — preview</title>
+<style>.wrap { padding: 20px 24px; gap: 32px; }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap amb-row' },
+    h(A.Toggle, { defaultChecked: true, label: 'Live updates' }),
+    h(A.Toggle, { label: 'Budget alerts' }),
+    h(A.Toggle, { defaultChecked: true, label: 'Anonymise prompts', disabled: true }),
+    h(A.Toggle, { 'aria-label': 'Compact rows' })
+  ));
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!-- @dsCard group="Brand" height=230 subtitle="The eight brand icons and the UI set, 24px, 1.5 stroke" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Icon — preview</title>
+<style>
+  .wrap { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .brand { display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px; }
+  .it { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 4px; border-radius: var(--radius-md); background: var(--surface-raised); border: 1px solid var(--line); font-size: 12px; line-height: 16px; font-weight: 500; color: var(--ink-secondary); }
+  .ui { display: flex; flex-wrap: wrap; gap: 14px 18px; color: var(--ink-secondary); align-items: center; }
+  .cap { font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
+</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  var brand = [['data', 'Data'], ['telemetry', 'Telemetry'], ['connect', 'Connect'], ['cloud', 'Cloud'], ['location', 'Location'], ['storage', 'Storage'], ['security', 'Security'], ['people', 'People']];
+  var ui = A.Icon.names.filter(function (n) { return !brand.some(function (b) { return b[0] === n; }); });
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap' },
+    h('div', { className: 'brand' }, brand.map(function (b) { return h('div', { className: 'it', key: b[0] }, h(A.Icon, { name: b[0], size: 24 }), b[1]); })),
+    h('div', null, h('div', { className: 'cap', style: { marginBottom: 10 } }, 'UI set'),
+      h('div', { className: 'ui' }, ui.map(function (n) { return h(A.Icon, { name: n, size: 20, key: n, label: n }); })))
+  ));
+</script>
+</body>
+</html>

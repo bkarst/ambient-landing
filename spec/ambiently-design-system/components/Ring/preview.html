@@ -1,0 +1,20 @@
+<!-- @dsCard group="Data" height=190 subtitle="A proportion of a whole; the track is the sunken surface" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Ring — preview</title>
+<style>.wrap { padding: 24px; gap: 40px; }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap amb-row' },
+    h(A.Ring, { value: 99.99, label: 'Uptime' }),
+    h(A.Ring, { value: 64, label: 'Budget used', text: '64%' }),
+    h(A.Ring, { value: 91, label: 'Over forecast', tone: 'negative', text: '91%' }),
+    h(A.Ring, { value: 37, size: 72, label: 'Cache hits', text: '37%' }),
+    h(A.Ring, { value: 100, size: 56, tone: 'positive', text: '✓', label: 'Healthy' })
+  ));
+</script>
+</body>
+</html>

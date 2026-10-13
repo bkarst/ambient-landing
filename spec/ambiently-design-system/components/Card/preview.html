@@ -1,0 +1,19 @@
+<!-- @dsCard group="Layout" height=220 subtitle="Raised surface, hairline, 16px corners; title, subtitle and an action slot" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Card — preview</title>
+<style>.wrap { padding: 24px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: start; } .copy { margin: 0; color: var(--ink-secondary); }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap' },
+    h(A.Card, { title: 'Global activity', subtitle: 'Live telemetry from around the world', action: h(A.Select, { size: 'sm', label: 'Time range', options: ['Last 24 hours', 'Last 7 days'] }) },
+      h('p', { className: 'copy' }, 'Ambiently collects telemetry data to help the world understand what’s happening, in real time.')),
+    h(A.Card, { compact: true, title: 'Budget', action: h(A.Badge, { tone: 'live' }, 'Live') },
+      h(A.Stat, { label: 'Spend today', value: 4218, prefix: '$', delta: 12, upIsGood: false, period: 'vs yesterday' }))
+  ));
+</script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-13T21:14:46Z"
+  },
+  "title": "Ambiently",
+  "namespace": "Ambiently",
+  "libraries": [
+    {
+      "name": "react",
+      "version": "18.3.1",
+      "global": "React",
+      "file": "components/lib/react.production.min.js"
+    },
+    {
+      "name": "react-dom",
+      "version": "18.3.1",
+      "global": "ReactDOM",
+      "file": "components/lib/react-dom.production.min.js"
+    }
+  ],
+  "sections": {},
+  "groups": [
+    "Logos",
+    "Icons"
+  ],
+  "assetGroups": {
+    "Logos": {
+      "name": "Logos",
+      "tile": "l",
+      "order": [
+        "ambiently-mark.png",
+        "ambiently-mark.svg"
+      ],
+      "files": {
+        "ambiently-mark.png": {
+          "name": "ambiently-mark.png",
+          "blob": "cc6e2c8dbffc64ec842f3946d5e413de",
+          "size": 554969,
+          "type": "image/png"
+        },
+        "ambiently-mark.svg": {
+          "name": "ambiently-mark.svg",
+          "blob": "489f65056e45fba63f595211de34f681",
+          "size": 15876,
+          "type": "image/svg+xml"
+        }
+      }
+    },
+    "Icons": {
+      "name": "Icons",
+      "tile": "xs",
+      "order": [
+        "data.svg",
+        "telemetry.svg",
+        "connect.svg",
+        "cloud.svg",
+        "location.svg",
+        "storage.svg",
+        "security.svg",
+        "people.svg",
+        "overview.svg",
+        "sensors.svg",
+        "alerts.svg",
+        "settings.svg",
+        "search.svg",
+        "chevron-down.svg",
+        "chevron-up.svg",
+        "chevron-right.svg",
+        "chevron-left.svg",
+        "play.svg",
+        "arrow-right.svg",
+        "arrow-up.svg",
+        "arrow-down.svg",
+        "arrow-up-right.svg",
+        "check.svg",
+        "close.svg",
+        "plus.svg",
+        "minus.svg",
+        "more.svg",
+        "info.svg",
+        "calendar.svg",
+        "clock.svg",
+        "download.svg",
+        "filter.svg",
+        "spend.svg",
+        "model.svg",
+        "external.svg"
+      ],
+      "files": {
+        "data.svg": {
+          "name": "data.svg",
+          "blob": "127801bb60464611e7947b451a0b1c63",
+          "size": 288,
+          "type": "image/svg+xml"
+        },
+        "telemetry.svg": {
+          "name": "telemetry.svg",
+          "blob": "74a692e2d7421151eb3429a9d75b5db0",
+          "size": 404,
+          "type": "image/svg+xml"
+        },
+        "connect.svg": {
+          "name": "connect.svg",
+          "blob": "8aeb019a90226d17b9accff66f08c476",
+          "size": 391,
+          "type": "image/svg+xml"
+        },
+        "cloud.svg": {
+          "name": "cloud.svg",
+          "blob": "bc27a472b9275e23aa3e5246419f602a",
+          "size": 311,
+          "type": "image/svg+xml"
+        },
+        "location.svg": {
+          "name": "location.svg",
+          "blob": "67daddf54cae253287a5c554fb8b3004",
+          "size": 345,
+          "type": "image/svg+xml"
+        },
+        "storage.svg": {
+          "name": "storage.svg",
+          "blob": "c93e2eac25f2446e71effc9d02075bdb",
+          "size": 381,
+          "type": "image/svg+xml"
+        },
+        "security.svg": {
+          "name": "security.svg",
+          "blob": "4309dd66055972e475b4159fb333d7b0",
+          "size": 298,
+          "type": "image/svg+xml"
+        },
+        "people.svg": {
+          "name": "people.svg",
+          "blob": "0e04ba57358b0b06104a4dc054e440aa",
+          "size": 320,
+          "type": "image/svg+xml"
+        },
+        "overview.svg": {
+          "name": "overview.svg",
+          "blob": "6d10f7914ffe1fa61abfbd7b7d98baec",
+          "size": 445,
+          "type": "image/svg+xml"
+        },
+        "sensors.svg": {
+          "name": "sensors.svg",
+          "blob": "c90bb7afa14b1ae6cfca9d4b706ea21e",
+          "size": 358,
+          "type": "image/svg+xml"
+        },
+        "alerts.svg": {
+          "name": "alerts.svg",
+          "blob": "c1e02a9f94452d8a37c4ce70d4ec0347",
+          "size": 305,
+          "type": "image/svg+xml"
+        },
+        "settings.svg": {
+          "name": "settings.svg",
+          "blob": "37a9778bdaafd42b8f265256b3b011c3",
+          "size": 417,
+          "type": "image/svg+xml"
+        },
+        "search.svg": {
+          "name": "search.svg",
+          "blob": "eea6ca4139e6dd031ddd889d930aae3c",
+          "size": 289,
+          "type": "image/svg+xml"
+        },
+        "chevron-down.svg": {
+          "name": "chevron-down.svg",
+          "blob": "5c6efd26aadf6ff53b5778433299319c",
+          "size": 251,
+          "type": "image/svg+xml"
+        },
+        "chevron-up.svg": {
+          "name": "chevron-up.svg",
+          "blob": "51d00a6fd03275c298ac4c3fe3c1ff36",
+          "size": 250,
+          "type": "image/svg+xml"
+        },
+        "chevron-right.svg": {
+          "name": "chevron-right.svg",
+          "blob": "c88209b51ea58e488a68bba9c65f527d",
+          "size": 252,
+          "type": "image/svg+xml"
+        },
+        "chevron-left.svg": {
+          "name": "chevron-left.svg",
+          "blob": "b15117b49096707c2b9f35fe774d753e",
+          "size": 253,
+          "type": "image/svg+xml"
+        },
+        "play.svg": {
+          "name": "play.svg",
+          "blob": "bf9dee7d27d48ef64cbcb7edc8723b82",
+          "size": 254,
+          "type": "image/svg+xml"
+        },
+        "arrow-right.svg": {
+          "name": "arrow-right.svg",
+          "blob": "0b2b98f3bd6e896c4821ea227c8ee863",
+          "size": 259,
+          "type": "image/svg+xml"
+        },
+        "arrow-up.svg": {
+          "name": "arrow-up.svg",
+          "blob": "07c1b6eab9215cfbed9d81b50c9a7d8d",
+          "size": 256,
+          "type": "image/svg+xml"
+        },
+        "arrow-down.svg": {
+          "name": "arrow-down.svg",
+          "blob": "c3dfa36fca55996adec2195829d4752a",
+          "size": 258,
+          "type": "image/svg+xml"
+        },
+        "arrow-up-right.svg": {
+          "name": "arrow-up-right.svg",
+          "blob": "7c793a43d39a238fea303d26e29f74b6",
+          "size": 259,
+          "type": "image/svg+xml"
+        },
+        "check.svg": {
+          "name": "check.svg",
+          "blob": "a6d74d983d2e3a8625882557b1bdbfcf",
+          "size": 252,
+          "type": "image/svg+xml"
+        },
+        "close.svg": {
+          "name": "close.svg",
+          "blob": "c577e840f3f66d88a0744c6eab947639",
+          "size": 252,
+          "type": "image/svg+xml"
+        },
+        "plus.svg": {
+          "name": "plus.svg",
+          "blob": "35f31d2d373e757d1b2f1e797d9d9266",
+          "size": 247,
+          "type": "image/svg+xml"
+        },
+        "minus.svg": {
+          "name": "minus.svg",
+          "blob": "0b570898504ffec5c072d012da39c32d",
+          "size": 240,
+          "type": "image/svg+xml"
+        },
+        "more.svg": {
+          "name": "more.svg",
+          "blob": "aedd1905f1ebc02852a6d004eee8682f",
+          "size": 425,
+          "type": "image/svg+xml"
+        },
+        "info.svg": {
+          "name": "info.svg",
+          "blob": "29ba08fc7c8ed57c8858a46888826b68",
+          "size": 295,
+          "type": "image/svg+xml"
+        },
+        "calendar.svg": {
+          "name": "calendar.svg",
+          "blob": "2994da6a4979695e2cac1bc17f35d0e2",
+          "size": 313,
+          "type": "image/svg+xml"
+        },
+        "clock.svg": {
+          "name": "clock.svg",
+          "blob": "86518c08fd781f050083690258bc3f2d",
+          "size": 288,
+          "type": "image/svg+xml"
+        },
+        "download.svg": {
+          "name": "download.svg",
+          "blob": "9bf42e352d21ffd1469ab7d4a52e1e1b",
+          "size": 264,
+          "type": "image/svg+xml"
+        },
+        "filter.svg": {
+          "name": "filter.svg",
+          "blob": "77df816ae00e1c267adfb5cba5860a07",
+          "size": 256,
+          "type": "image/svg+xml"
+        },
+        "spend.svg": {
+          "name": "spend.svg",
+          "blob": "6ee10c6d3130e05d40eee2fcc7981413",
+          "size": 353,
+          "type": "image/svg+xml"
+        },
+        "model.svg": {
+          "name": "model.svg",
+          "blob": "d4cc6b957f9035303d0071aa52cb4a23",
+          "size": 414,
+          "type": "image/svg+xml"
+        },
+        "external.svg": {
+          "name": "external.svg",
+          "blob": "bb9f10610f2070756c48873261e08fb3",
+          "size": 316,
+          "type": "image/svg+xml"
+        }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "lastChange": {
+    "by": "Ben Karst",
+    "via": "Claude",
+    "at": "2026-10-13T21:14:46Z",
+    "note": "First build from the brand sheet and the supplied mark: tokens, Inter, 14 components, charts, a dashboard page and the cover."
+  }
+}

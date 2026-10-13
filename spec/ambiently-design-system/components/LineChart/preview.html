@@ -1,0 +1,24 @@
+<!-- @dsCard group="Data" height=360 subtitle="Smooth 2px lines, a wash under the first series, end labels, a crosshair tooltip on hover" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>LineChart — preview</title>
+<style>.wrap { padding: 24px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; }</style>
+</head>
+<body class="amb-page">
+<div id="root"></div>
+<script>
+  var A = window.Ambiently, h = React.createElement;
+  var days = []; for (var i = 1; i <= 30; i++) days.push('Sep ' + i);
+  var thisMonth = [2980, 3120, 3040, 3410, 3620, 3380, 2890, 3050, 3460, 3720, 3910, 3660, 3240, 3080, 3540, 3880, 4120, 4010, 3590, 3310, 3780, 4160, 4420, 4280, 3870, 3620, 4010, 4390, 4610, 4218];
+  var lastMonth = [3350, 3280, 3410, 3520, 3610, 3480, 3220, 3290, 3440, 3560, 3690, 3610, 3380, 3300, 3450, 3580, 3700, 3650, 3400, 3330, 3480, 3610, 3740, 3700, 3450, 3380, 3520, 3640, 3760, 3700];
+  var hours = []; for (var j = 0; j < 24; j++) hours.push((j < 10 ? '0' : '') + j + ':00');
+  var tokens = [410, 380, 350, 330, 320, 340, 420, 610, 840, 1020, 1180, 1240, 1210, 1260, 1310, 1290, 1220, 1140, 980, 860, 760, 640, 540, 460].map(function (v) { return v * 1000; });
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'wrap' },
+    h(A.Card, { title: 'Daily spend', subtitle: 'September, compared with August', action: h(A.Select, { size: 'sm', label: 'Time range', options: ['Last 30 days', 'Last 7 days', 'This quarter'] }) },
+      h(A.LineChart, { title: 'Daily spend', prefix: '$', labels: days, series: [{ name: 'September', values: thisMonth }, { name: 'August', values: lastMonth }], height: 220 })),
+    h(A.Card, { title: 'Tokens per second', subtitle: 'Last 24 hours', action: h(A.Badge, { tone: 'live' }, 'Live') },
+      h(A.LineChart, { title: 'Tokens per second', labels: hours, series: [{ name: 'Tokens / sec', values: tokens }], height: 220, valueLabel: 'Tokens / sec' }))
+  ));
+</script>
+</body>
+</html>
