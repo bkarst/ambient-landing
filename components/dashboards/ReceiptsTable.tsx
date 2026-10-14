@@ -10,7 +10,7 @@ const rows = sampleData.chapters.tasks.receipts;
 /** Task receipts (§6.7.3): a real table with a caption; on compact it reflows to two lines per row, never a horizontal scroll. */
 export function ReceiptsTable() {
   return (
-    <Reveal selector="tbody tr" distance={8} stagger={0.05}>
+    <Reveal selector="tbody tr" distance={8} stagger={0.05} className="receipts-wrap">
       <table className="receipts-table body">
         <caption className="amb-sr">{copy.caption}</caption>
         <thead>
@@ -53,7 +53,9 @@ export function ReceiptsTable() {
                   {r.modelOrTool}
                 </span>
               </td>
-              <td className="meta num">{r.tokens != null ? compact(r.tokens) : '—'}</td>
+              <td className="meta tokens num" data-tokens={r.tokens != null ? '' : undefined}>
+                {r.tokens != null ? compact(r.tokens) : '—'}
+              </td>
               <td className="cost num" style={{ fontWeight: 600 }}>
                 {r.cost.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
               </td>
