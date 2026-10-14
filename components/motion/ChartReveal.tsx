@@ -3,6 +3,7 @@
 import { useRef, type CSSProperties, type ReactNode } from 'react';
 import { gsap, useGSAP, ScrollTrigger, motion, motionOff } from './gsap';
 import { renderCount, type CountMode } from './CountUp';
+import { REVEAL_EVENT } from '@/components/mui/Ring';
 
 interface ChartRevealProps {
   children: ReactNode;
@@ -26,17 +27,23 @@ export function ChartReveal({ children, start = 'top 80%', card = false, classNa
     () => {
       const root = ref.current;
       if (!root || motionOff()) return;
-      if (ScrollTrigger.isInViewport(root, 0.05)) return;
+      if (ScrollTrigger.isInViewport(root, 0.05)) {
+        root.dispatchEvent(new CustomEvent(REVEAL_EVENT, { detail: { instant: true } }));
+        return;
+      }
 
+      // Selectors cover both the ported SVG charts (.amb-*) and the MUI X charts (.Mui*) inside the scope.
       const q = gsap.utils.selector(root);
-      const lines = q('.amb-line');
+      const lines = q('.amb-line, .amb-chart .MuiLineChart-line');
       const areas = q('.amb-area');
+      const muiAreas = q('.amb-chart .MuiLineChart-area');
       const ends = q('.amb-end-dot, .amb-end-label');
-      const vBars = q('.amb-chart:not([data-horizontal]) .amb-bar');
-      const hBars = q('.amb-chart[data-horizontal] .amb-bar');
-      const barLabels = q('.amb-bar-label');
+      const vBars = q('.amb-chart:not([data-horizontal]) .amb-bar, .amb-chart:not([data-horizontal]) .MuiBarChart-element');
+      const hBars = q('.amb-chart[data-horizontal] .amb-bar, .amb-chart[data-horizontal] .MuiBarChart-element');
+      const barLabels = q('.amb-bar-label, .MuiBarChart-label');
       const rings = q('.amb-ring-fill');
-      const sparks = q('.amb-spark-line');
+      const sparks = q('.amb-spark-line, .amb-spark .MuiLineChart-line');
+      const sparkWash = q('.amb-spark .MuiLineChart-area, .amb-spark .amb-spark-dot');
       const counters = q<HTMLElement>('[data-count]');
 
       const tl = gsap.timeline({ paused: true, defaults: { ease: 'amb-out' } });
@@ -52,9 +59,18 @@ export function ChartReveal({ children, start = 'top 80%', card = false, classNa
         gsap.set(sparks, { drawSVG: '0%' });
         tl.to(sparks, { drawSVG: '100%', duration: motion.duration.draw }, 0);
       }
+      if (sparkWash.length) {
+        gsap.set(sparkWash, { opacity: 0 });
+        tl.to(sparkWash, { opacity: 1, duration: 0.4 }, '>-0.3');
+      }
       if (areas.length) {
         gsap.set(areas, { opacity: 0 });
         tl.to(areas, { opacity: 0.1, duration: 0.4 }, '>-0.3');
+      }
+      if (muiAreas.length) {
+        // MUI sets `opacity` inline for fading, so the wash animates on fill-opacity instead.
+        gsap.set(muiAreas, { fillOpacity: 0 });
+        tl.to(muiAreas, { fillOpacity: 0.1, duration: 0.4 }, lines.length ? '>-0.3' : 0);
       }
       if (ends.length) {
         gsap.set(ends, { scale: 0, transformOrigin: 'center center' });
@@ -105,13 +121,22 @@ export function ChartReveal({ children, start = 'top 80%', card = false, classNa
         );
       });
 
-      ScrollTrigger.create({ trigger: root, start, once: true, onEnter: () => tl.play() });
+      ScrollTrigger.create({
+        trigger: root,
+        start,
+        once: true,
+        onEnter: () => {
+          tl.play();
+          // MUI rings hold their value in React state, so they fill on this event rather than from the timeline.
+          root.dispatchEvent(new CustomEvent(REVEAL_EVENT, { detail: { delay: card ? 0.3 : 0.1 } }));
+        },
+      });
     },
     { scope: ref },
   );
 
   return (
-    <div ref={ref} className={className} style={style}>
+    <div ref={ref} className={className} style={style} data-chart-reveal="">
       {children}
     </div>
   );

@@ -6,7 +6,7 @@ test.describe('landing page', () => {
     await page.goto('/?motion=off');
     const h1 = page.locator('h1');
     await expect(h1).toHaveCount(1);
-    await expect(h1).toContainText('AI tokens are money, you want receipts, right?');
+    await expect(h1).toContainText('AI tokens are money. You want receipts, right?');
     await expect(page.locator('footer')).toContainText('Do you know what tasks are your employees using AI for?');
   });
 
@@ -29,7 +29,9 @@ test.describe('landing page', () => {
       Array.from(document.querySelectorAll('main *'))
         .filter((el) => {
           const cs = getComputedStyle(el);
-          return cs.opacity === '0' && (el as HTMLElement).offsetParent !== null && !el.closest('[aria-hidden="true"]') && !el.classList.contains('diagram-dot');
+          // MUI X Charts keep an empty 1 px div inside each chart surface as a tooltip anchor; an empty element hides nothing.
+          const emptyAnchor = el.tagName === 'DIV' && el.childElementCount === 0 && !el.textContent;
+          return cs.opacity === '0' && (el as HTMLElement).offsetParent !== null && !el.closest('[aria-hidden="true"]') && !el.classList.contains('diagram-dot') && !emptyAnchor;
         })
         .map((el) => el.tagName + '.' + el.className),
     );
@@ -59,18 +61,21 @@ test.describe('landing page', () => {
     await page.locator('#lens').scrollIntoViewIfNeeded();
     await page.getByRole('button', { name: 'By team' }).click();
     await expect(page.locator('#lens .headline')).toContainText('Engineering is 56% of spend.');
-    await expect(page.locator('#lens svg[role="img"]').first()).toHaveAttribute('aria-label', /by team/i);
+    await expect(page.locator('#lens .amb-chart').first()).toHaveAttribute('aria-label', /by team/i);
   });
 
   test('charts are keyboard readable', async ({ page }) => {
     await page.goto('/?motion=off');
+    // MUI X Charts expose a focusable proxy inside each chart; arrow keys walk the points and show the tooltip.
     const chart = page.locator('#dashboards .amb-chart').first();
     await chart.scrollIntoViewIfNeeded();
-    await chart.focus();
+    await chart.locator('[tabindex="0"]').first().focus();
     await page.keyboard.press('ArrowRight');
-    await expect(chart.locator('.amb-tip')).toBeVisible();
-    await page.keyboard.press('Escape');
-    await expect(chart.locator('.amb-tip')).toHaveCount(0);
+    const tip = page.locator('.MuiChartsTooltip-root');
+    await expect(tip).toBeVisible();
+    await expect(tip).toContainText('September');
+    await page.keyboard.press('Tab');
+    await expect(tip).toHaveCount(0);
   });
 
   test('is dark by default and the toggle remembers light', async ({ page }) => {

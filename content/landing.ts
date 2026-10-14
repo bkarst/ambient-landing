@@ -19,7 +19,7 @@ export const landing = {
     secondary: site.cta.secondary,
     microcopy: 'Four fields, two of them optional. Takes under a minute.',
     receipt: {
-      title: 'Receipt',
+      title: 'My Example Project',
       subtitle: 'Today · Example Co.',
       live: 'Live',
       totalLabel: 'Total today',

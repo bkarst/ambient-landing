@@ -1,7 +1,7 @@
 'use client';
 
 import { useWidth } from '@/components/ds/useWidth';
-import { BarChart } from '@/components/ds/BarChart';
+import { BarChart } from '@/components/mui/BarChart';
 import type { FormatKey } from '@/components/ds/format';
 
 interface RankedBarsProps {

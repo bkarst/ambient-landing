@@ -84,7 +84,7 @@ describe("What's next containment (§6.10)", () => {
 
 describe('fixed copy (§4.1)', () => {
   it('hero and footer taglines are verbatim', () => {
-    expect(site.taglines.hero).toBe('AI tokens are money, you want receipts, right?');
+    expect(site.taglines.hero).toBe('AI tokens are money. You want receipts, right?');
     expect(site.taglines.footer).toBe('Do you know what tasks are your employees using AI for?');
     expect(landing.hero.headline).toBe(site.taglines.hero);
     expect(landing.footer.tagline).toBe(site.taglines.footer);

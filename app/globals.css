@@ -562,6 +562,7 @@ summary:focus-visible,
 }
 .ringcard {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
   gap: var(--space-4);
@@ -869,16 +870,12 @@ textarea.input {
   position: relative;
   overflow: hidden;
   background-color: var(--footer-fade);
-  background-image: radial-gradient(ellipse 30% 70% at 92% 50%, var(--glow-accent-soft), transparent 100%),
-    linear-gradient(180deg, var(--footer-fade), var(--surface-sunken));
+  background-image: linear-gradient(180deg, var(--footer-fade), var(--surface-sunken));
   background-repeat: no-repeat;
   border-top: 1px solid var(--footer-rule);
 }
 .footer-base {
   background: var(--surface-sunken);
-}
-.footer-mark .amb-logo-mark {
-  filter: drop-shadow(0 0 32px var(--glow-accent));
 }
 .footer-mark {
   position: absolute;

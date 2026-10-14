@@ -5,6 +5,7 @@ import { site } from '@/config/site';
 import { theme } from '@/config/theme';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { MarkDefs } from '@/components/ds/Logo';
+import { MuiProvider } from '@/components/mui/MuiProvider';
 import { organizationJsonLd, webSiteJsonLd } from '@/lib/seo/json-ld';
 
 const inter = localFont({
@@ -64,7 +65,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <MarkDefs />
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={webSiteJsonLd()} />
-        {children}
+        <MuiProvider>{children}</MuiProvider>
       </body>
     </html>
   );

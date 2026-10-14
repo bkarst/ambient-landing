@@ -3,11 +3,12 @@ import { sampleData } from '@/content/sample-data';
 import { Badge } from '@/components/ds/Badge';
 import { Button } from '@/components/ds/Button';
 import { Card } from '@/components/ds/Card';
-import { Ring } from '@/components/ds/Ring';
 import { Sidebar } from '@/components/ds/Sidebar';
 import { Stat } from '@/components/ds/Stat';
-import { BarChart } from '@/components/ds/BarChart';
-import { LineChart } from '@/components/ds/LineChart';
+import { BarChart } from '@/components/mui/BarChart';
+import { LineChart } from '@/components/mui/LineChart';
+import { Ring } from '@/components/mui/Ring';
+import { Spark } from '@/components/mui/Spark';
 import { CountUp } from '@/components/motion/CountUp';
 import { RangeLineChart } from '@/components/motion/RangeLineChart';
 import { RankedBars } from './RankedBars';
@@ -23,7 +24,8 @@ const ranges = [
 
 /**
  * The product shot (§6.5): the product's Insights view, rendered live from design-system components and
- * reflowing with real layout, never a CSS transform. The sidebar is decorative here (inert, hidden from AT).
+ * reflowing with real layout, never a CSS transform. Charts, sparklines and rings are MUI X Charts wrapped
+ * in the design system's API (components/mui). The sidebar is decorative here (inert, hidden from AT).
  */
 export function InsightsDashboard() {
   return (
@@ -74,7 +76,7 @@ export function InsightsDashboard() {
               delta={d.stats.spendToday.delta}
               upIsGood={false}
               period={copy.tiles.spendToday.period}
-              trend={[...d.stats.spendToday.trend]}
+              spark={<Spark values={[...d.stats.spendToday.trend]} width={72} height={28} />}
             />
           </Card>
           <Card compact>
@@ -83,7 +85,7 @@ export function InsightsDashboard() {
               value={<CountUp value={d.stats.tokensToday.value} mode="compact" trigger="manual" />}
               delta={d.stats.tokensToday.delta}
               period={copy.tiles.tokensToday.period}
-              trend={[...d.hourly.values.slice(-12)]}
+              spark={<Spark values={[...d.hourly.values.slice(-12)]} width={72} height={28} />}
             />
           </Card>
           <Card compact>

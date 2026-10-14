@@ -19,3 +19,35 @@
   .amb-ring .amb-ring-fill { stroke: Highlight; }
   .amb-ring .amb-ring-track { stroke: GrayText; }
 }
+
+/* ---------- MUI X Charts inside the design system (components/mui) ----------
+   The product shot's charts are MUI X Charts wrapped in the ported API. Colours come from the chart tokens
+   through the MUI theme (components/mui/theme.ts); the rules below cover the few marks MUI styles itself. */
+.amb-mui .MuiChartsGrid-line { stroke: var(--chart-grid); stroke-width: 1; }
+.amb-mui .MuiChartsAxis-line { stroke: var(--line-strong); stroke-width: 1; opacity: 0.6; }
+.amb-mui .MuiLineChart-line { stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.amb-chart.amb-mui .MuiLineChart-area { fill-opacity: 0.1; }
+.amb-mui .MuiChartsAxisHighlight-root { stroke: var(--line-strong); stroke-width: 1; opacity: 0.7; }
+.amb-mui .MuiLineChart-highlight { stroke: var(--surface-raised); stroke-width: 2; }
+.amb-mui .MuiBarChart-label { font-size: 12px; font-weight: 600; fill: var(--ink); font-variant-numeric: tabular-nums; }
+.amb-mui .MuiChartsLegend-root { gap: var(--space-2) var(--space-4); margin: 0 0 var(--space-3); font-size: 13px; line-height: 18px; font-weight: 500; color: var(--ink-secondary); }
+/* Sparkline: the wash, line and end dot the design system draws, on MUI's plot. */
+.amb-spark.amb-mui .MuiLineChart-area { fill-opacity: 0.1; }
+.amb-spark.amb-mui .amb-spark-dot { fill: var(--chart-1); stroke: var(--surface-raised); stroke-width: 2; }
+/* Rings: MUI's Gauge arcs take the ring tokens. */
+.amb-ring.amb-mui .MuiGauge-referenceArc { fill: var(--chart-track); }
+.amb-ring.amb-mui .MuiGauge-valueArc { fill: var(--chart-1); }
+.amb-ring.amb-mui .is-positive .MuiGauge-valueArc { fill: var(--positive); }
+.amb-ring.amb-mui .is-negative .MuiGauge-valueArc { fill: var(--negative); }
+/* The tooltip is a design-system tip: raised surface, hairline, float shadow. */
+.MuiChartsTooltip-paper { border-radius: var(--radius-md) !important; box-shadow: var(--shadow-float) !important; font-family: var(--font-sans); }
+.MuiChartsTooltip-cell { font-size: 12px !important; line-height: 16px !important; font-variant-numeric: tabular-nums; }
+.MuiChartsTooltip-root { pointer-events: none; }
+
+@media (forced-colors: active) {
+  .amb-mui .MuiLineChart-line, .amb-mui .MuiBarChart-element, .amb-mui .MuiLineChart-area { stroke: CanvasText; fill: CanvasText; }
+  .amb-mui .MuiChartsGrid-line, .amb-mui .MuiChartsAxis-line, .amb-mui .MuiChartsAxisHighlight-root { stroke: GrayText; opacity: 1; }
+  .amb-mui .MuiChartsAxis-tickLabel, .amb-mui .MuiBarChart-label { fill: CanvasText; }
+  .amb-ring.amb-mui .MuiGauge-valueArc { fill: Highlight; }
+  .amb-ring.amb-mui .MuiGauge-referenceArc { fill: GrayText; }
+}

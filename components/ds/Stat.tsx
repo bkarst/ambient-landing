@@ -19,6 +19,8 @@ export interface StatProps {
   /** The one 44px figure a view leads with */
   hero?: boolean;
   sparkWidth?: number;
+  /** Replaces the built-in sparkline (the dashboard passes the MUI one) */
+  spark?: ReactNode;
   className?: string;
 }
 
@@ -35,13 +37,13 @@ export function Stat(props: StatProps) {
           </span>
         ) : null}
       </span>
-      {props.delta != null || props.trend || props.caption ? (
+      {props.delta != null || props.trend || props.spark || props.caption ? (
         <div className="amb-stat-foot">
           <span className="amb-row" style={{ gap: 8 }}>
             {props.delta != null ? <Delta value={props.delta} upIsGood={props.upIsGood} period={props.period} /> : null}
             {props.caption ? <span className="amb-stat-unit">{props.caption}</span> : null}
           </span>
-          {props.trend ? <Spark values={props.trend} width={props.sparkWidth || 72} height={28} /> : null}
+          {props.spark ? props.spark : props.trend ? <Spark values={props.trend} width={props.sparkWidth || 72} height={28} /> : null}
         </div>
       ) : null}
     </div>

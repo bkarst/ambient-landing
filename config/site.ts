@@ -21,7 +21,7 @@ export const site = {
     'and ties every dollar to the person, team and task behind it.',
 
   taglines: {
-    hero: 'AI tokens are money, you want receipts, right?',
+    hero: 'AI tokens are money. You want receipts, right?',
     footer: 'Do you know what tasks are your employees using AI for?',
     brand: 'Real-world insights. Quieter.',
   },
@@ -41,8 +41,8 @@ export const site = {
   seo: {
     title: 'Ambiently — AI spend tracking with receipts for every token',
     titleTemplate: '%s · Ambiently',
-    ogTitle: 'AI tokens are money, you want receipts, right?',
-    ogImageAlt: 'Ambiently: AI tokens are money, you want receipts, right?',
+    ogTitle: 'AI tokens are money. You want receipts, right?',
+    ogImageAlt: 'Ambiently: AI tokens are money. You want receipts, right?',
     twitterHandle: undefined as string | undefined, // [Verify]
   },
 

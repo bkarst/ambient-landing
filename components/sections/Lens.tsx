@@ -65,8 +65,8 @@ export function Lens() {
         return;
       }
       if (motionOff() || !chart.current) return;
-      const bars = chart.current.querySelectorAll('.amb-bar');
-      const labels = chart.current.querySelectorAll('.amb-bar-label');
+      const bars = chart.current.querySelectorAll('.amb-bar, .MuiBarChart-element');
+      const labels = chart.current.querySelectorAll('.amb-bar-label, .MuiBarChart-label');
       gsap.fromTo(bars, { scaleX: 0, transformOrigin: '0% 50%' }, { scaleX: 1, duration: 0.5, stagger: motion.stagger.bars, clearProps: 'transform' });
       gsap.fromTo(labels, { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: motion.stagger.bars, delay: 0.2 });
       if (takeaway.current) gsap.fromTo(takeaway.current, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 });

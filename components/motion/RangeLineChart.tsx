@@ -1,7 +1,7 @@
 'use client';
 
 import { useId, useRef, useState } from 'react';
-import { LineChart } from '@/components/ds/LineChart';
+import { LineChart } from '@/components/mui/LineChart';
 import { Select } from '@/components/ds/Select';
 import { track } from '@/lib/analytics';
 import { gsap, useGSAP, motionOff } from './gsap';
@@ -42,7 +42,7 @@ export function RangeLineChart({ chartId, title, ranges, height, format = 'curre
         return;
       }
       if (!ref.current || motionOff()) return;
-      const lines = ref.current.querySelectorAll('.amb-line');
+      const lines = ref.current.querySelectorAll('.amb-line, .MuiLineChart-line');
       gsap.fromTo(lines, { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.5, ease: 'amb-out', stagger: 0.05 });
     },
     { scope: ref, dependencies: [rangeId] },
