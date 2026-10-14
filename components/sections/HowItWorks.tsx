@@ -13,7 +13,7 @@ export function HowItWorks() {
   const context = contextIntegrations.map((i) => ({ id: i.id, name: i.name }));
 
   return (
-    <section id="how-it-works" className="section" aria-labelledby="how-heading">
+    <section id="how-it-works" className="section" aria-labelledby="how-heading" data-atmo="navy-left">
       <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-12)' }}>
         <SectionIntro id="how-heading" overline={copy.overline} heading={copy.heading} />
         <Reveal as="ol" selector="li" distance={24} className="steps" style={{ listStyle: 'none', margin: 0, padding: 0 }}>

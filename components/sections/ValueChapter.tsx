@@ -29,7 +29,7 @@ interface ValueChapterProps {
 export function ValueChapter({ copy, flipped, children }: ValueChapterProps) {
   const proofs = copy.proofs ?? (copy.proof ? [copy.proof] : []);
   return (
-    <section id={copy.id} className="section" aria-labelledby={`${copy.id}-heading`}>
+    <section id={copy.id} className="section" aria-labelledby={`${copy.id}-heading`} data-atmo={flipped ? 'navy-left' : 'navy'}>
       <div className={`wrap chapter-grid${flipped ? ' is-flipped' : ''}`}>
         <Reveal selector="[data-reveal]" className="chapter-copy flex flex-col gap-5">
           <p className="eyebrow" data-reveal style={{ margin: 0 }}>

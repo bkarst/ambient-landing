@@ -31,6 +31,7 @@ export async function SiteFooter() {
           </div>
         </div>
       </div>
+      <div className="footer-base">
       <div className="wrap" style={{ paddingBlock: 'var(--space-12)', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
         <div className="footer-links">
           <div>
@@ -78,6 +79,7 @@ export async function SiteFooter() {
           </p>
           <p style={{ margin: 0, maxWidth: 720 }}>{copy.trademarks}</p>
         </div>
+      </div>
       </div>
     </footer>
   );

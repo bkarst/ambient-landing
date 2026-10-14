@@ -50,6 +50,67 @@
   --hero-art-ink: var(--gold);
 }
 
+/* ---------- dark atmosphere (identity guide) ----------
+   On dark, the ground falls from Deep Navy to near-black, Ambient Yellow glows behind the mark, cards carry a
+   faint top sheen, and the hero rests on the night-side rim of the planet. Light stays flat: every variable
+   below collapses to the plain surface or to transparent, so nothing here paints in the light appearance. */
+:root {
+  --space-black: color-mix(in srgb, var(--surface-sunken) 42%, #000);
+  --atmo-navy: color-mix(in srgb, var(--surface-hover) 76%, var(--line-strong));
+  --glow-accent: color-mix(in srgb, var(--accent) 24%, transparent);
+  --glow-accent-soft: color-mix(in srgb, var(--accent) 9%, transparent);
+  --rim-accent: color-mix(in srgb, var(--accent) 55%, transparent);
+  --rim-white: color-mix(in srgb, #fff 70%, transparent);
+  --card-edge: color-mix(in srgb, #fff 7%, transparent);
+  --card-sheen: linear-gradient(180deg, color-mix(in srgb, #fff 3.5%, transparent), transparent 45%);
+  --card-shadow: inset 0 1px 0 var(--card-edge);
+  --grain: 0.05;
+  --footer-fade: transparent;
+  --footer-rule: transparent;
+  --ground: radial-gradient(1200px 720px at 14% -8%, var(--atmo-navy), transparent 70%),
+    linear-gradient(
+      180deg,
+      var(--surface) 0,
+      var(--surface) 480px,
+      color-mix(in srgb, var(--surface) 72%, var(--space-black)) 1200px,
+      color-mix(in srgb, var(--surface) 38%, var(--space-black)) 2000px,
+      color-mix(in srgb, var(--surface) 12%, var(--space-black)) 2900px,
+      var(--space-black) 3800px
+    );
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --space-black: var(--surface);
+    --atmo-navy: var(--surface);
+    --glow-accent: transparent;
+    --glow-accent-soft: transparent;
+    --rim-accent: transparent;
+    --rim-white: transparent;
+    --card-edge: transparent;
+    --card-sheen: none;
+    --card-shadow: var(--shadow-card);
+    --ground: none;
+    --grain: 0;
+    --footer-fade: var(--surface-sunken);
+    --footer-rule: var(--line);
+  }
+}
+:root[data-theme='light'] {
+  --space-black: var(--surface);
+  --atmo-navy: var(--surface);
+  --glow-accent: transparent;
+  --glow-accent-soft: transparent;
+  --rim-accent: transparent;
+  --rim-white: transparent;
+  --card-edge: transparent;
+  --card-sheen: none;
+  --card-shadow: var(--shadow-card);
+  --ground: none;
+  --grain: 0;
+  --footer-fade: var(--surface-sunken);
+  --footer-rule: var(--line);
+}
+
 /* ---------- page ---------- */
 html {
   -webkit-text-size-adjust: 100%;
@@ -60,8 +121,69 @@ html {
   }
 }
 body.amb-page {
+  position: relative;
   min-height: 100svh;
   overflow-x: clip;
+  background-color: var(--space-black);
+}
+/* The ground gradient lives on a layer of fixed height rather than on the body itself: Chrome rasterises a
+   gradient the height of the whole page with visible steps. */
+body.amb-page::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3800px;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--ground);
+  background-repeat: no-repeat;
+}
+/* Film grain over the dark ground: breaks the 8-bit banding a slow navy-to-black gradient shows on wide displays. */
+body.amb-page::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--grain);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+/* Cards: a one-pixel highlight along the top edge and a faint sheen, the panel treatment on the identity board. */
+.amb-card,
+.shot {
+  background-image: var(--card-sheen);
+  box-shadow: var(--card-shadow);
+}
+.amb-btn.is-primary {
+  box-shadow: 0 6px 24px -6px var(--glow-accent);
+}
+.amb-btn.is-primary:hover:not(:disabled) {
+  box-shadow: 0 8px 28px -4px var(--glow-accent);
+}
+/* Section blooms: a soft pool of yellow or lighter navy behind the content, sized in px so it never stretches. */
+[data-atmo] {
+  position: relative;
+  isolation: isolate;
+}
+[data-atmo]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+}
+/* Each bloom reaches full transparency at the section's own edges, so nothing is clipped into a hard line. */
+[data-atmo='accent']::before {
+  background-image: radial-gradient(ellipse 42% 50% at 50% 55%, color-mix(in srgb, var(--glow-accent) 55%, transparent), transparent 100%);
+}
+[data-atmo='navy']::before {
+  background-image: radial-gradient(ellipse 40% 50% at 78% 50%, var(--atmo-navy), transparent 100%);
+}
+[data-atmo='navy-left']::before {
+  background-image: radial-gradient(ellipse 40% 50% at 22% 50%, var(--atmo-navy), transparent 100%);
 }
 [id] {
   scroll-margin-top: calc(56px + env(safe-area-inset-top) + 16px);
@@ -162,7 +284,7 @@ summary:focus-visible,
   top: 0;
   z-index: 50;
   padding-top: env(safe-area-inset-top);
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  background: color-mix(in srgb, var(--surface) 64%, transparent);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid transparent;
@@ -195,6 +317,9 @@ summary:focus-visible,
     height: 56px;
   }
 }
+.site-header .amb-logo-mark {
+  filter: drop-shadow(0 0 10px var(--glow-accent));
+}
 .site-nav a {
   display: inline-flex;
   align-items: center;
@@ -217,9 +342,49 @@ summary:focus-visible,
 .hero {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+}
+.hero > .wrap {
+  z-index: 1;
+}
+/* The sun's glow: Ambient Yellow pooled behind the halftone, with a lighter navy bloom up and to the left. */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image: radial-gradient(760px 760px at 92% 50%, var(--glow-accent), var(--glow-accent-soft) 38%, transparent 68%),
+    radial-gradient(900px 600px at 0% 0%, var(--atmo-navy), transparent 70%);
+  background-repeat: no-repeat;
+}
+/* The night-side rim of the planet along the bottom of the hero: the one gradient the brand sheet draws itself. */
+.hero::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  left: 50%;
+  top: calc(100% - 96px);
+  width: max(150vw, 1800px);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 0, color-mix(in srgb, var(--atmo-navy) 60%, var(--space-black)), var(--space-black) 18%);
+  box-shadow: 0 -1px 0 0 var(--rim-white), 0 -2px 2px var(--rim-accent), 0 -16px 48px var(--glow-accent), 0 -64px 200px var(--glow-accent-soft);
+}
+@media (max-width: 1279px) {
+  .hero::before {
+    background-image: radial-gradient(640px 640px at 100% 100%, var(--glow-accent), var(--glow-accent-soft) 38%, transparent 68%),
+      radial-gradient(700px 500px at 0% 0%, var(--atmo-navy), transparent 70%);
+  }
+  .hero::after {
+    top: calc(100% - 56px);
+  }
 }
 .hero-art {
   position: absolute;
+  z-index: 0;
   right: -18%;
   top: 50%;
   width: min(640px, 70vw);
@@ -739,8 +904,17 @@ textarea.input {
 .footer-tagline {
   position: relative;
   overflow: hidden;
+  background-color: var(--footer-fade);
+  background-image: radial-gradient(ellipse 30% 70% at 92% 50%, var(--glow-accent-soft), transparent 100%),
+    linear-gradient(180deg, var(--footer-fade), var(--surface-sunken));
+  background-repeat: no-repeat;
+  border-top: 1px solid var(--footer-rule);
+}
+.footer-base {
   background: var(--surface-sunken);
-  border-top: 1px solid var(--line);
+}
+.footer-mark .amb-logo-mark {
+  filter: drop-shadow(0 0 32px var(--glow-accent));
 }
 .footer-mark {
   position: absolute;

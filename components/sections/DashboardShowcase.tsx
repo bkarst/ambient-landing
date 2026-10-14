@@ -9,7 +9,7 @@ const copy = landing.dashboards;
 /** The product shot (§6.5): framed in a radius-xl panel, settling in with a scrubbed tilt on wide screens. */
 export function DashboardShowcase() {
   return (
-    <section id="dashboards" className="section" aria-labelledby="dashboards-heading">
+    <section id="dashboards" className="section" aria-labelledby="dashboards-heading" data-atmo="accent">
       <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-12)' }}>
         <SectionIntro id="dashboards-heading" overline={copy.overline} heading={copy.heading} body={copy.body} />
         <div>

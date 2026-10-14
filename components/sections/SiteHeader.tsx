@@ -19,7 +19,7 @@ export function SiteHeader({ minimal = false }: { minimal?: boolean }) {
       <header className="site-header" data-cta="secondary">
         <div className="wrap site-header-inner">
           <a href={home} aria-label={site.name} style={{ display: 'inline-flex', textDecoration: 'none' }}>
-            <Logo variant="lockup" size={18} />
+            <Logo variant="lockup" size={24} />
           </a>
           {!minimal && (
             <nav className="site-nav hidden md:flex" aria-label="Page sections" style={{ gap: 4 }}>
