@@ -1,4 +1,5 @@
-export { Logo, Mark, MarkDefs, MARK_SYMBOL_ID } from './Logo';
+export { Logo, Mark, MarkDefs, MARK_SYMBOL_ID, MARK_COARSE_SYMBOL_ID, MARK_COARSE_BELOW } from './Logo';
+export type { MarkDensity } from './Logo';
 export type { LogoProps, MarkProps } from './Logo';
 export { Icon } from './Icon';
 export type { IconProps } from './Icon';
@@ -42,3 +43,4 @@ export type { Point } from './geometry';
 export { useWidth } from './useWidth';
 export { useChartPointer } from './useChartPointer';
 export { LOGO_DOTS } from './logo-dots';
+export { LOGO_DOTS_COARSE } from './logo-dots-coarse';

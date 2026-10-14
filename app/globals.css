@@ -347,15 +347,14 @@ summary:focus-visible,
 .hero > .wrap {
   z-index: 1;
 }
-/* The sun's glow: Ambient Yellow pooled behind the halftone, with a lighter navy bloom up and to the left. */
+/* A lighter navy bloom up and to the left, the light on the identity board's panels. */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -2;
   pointer-events: none;
-  background-image: radial-gradient(760px 760px at 92% 50%, var(--glow-accent), var(--glow-accent-soft) 38%, transparent 68%),
-    radial-gradient(900px 600px at 0% 0%, var(--atmo-navy), transparent 70%);
+  background-image: radial-gradient(900px 600px at 0% 0%, var(--atmo-navy), transparent 70%);
   background-repeat: no-repeat;
 }
 /* The night-side rim of the planet along the bottom of the hero: the one gradient the brand sheet draws itself. */
@@ -375,48 +374,18 @@ summary:focus-visible,
 }
 @media (max-width: 1279px) {
   .hero::before {
-    background-image: radial-gradient(640px 640px at 100% 100%, var(--glow-accent), var(--glow-accent-soft) 38%, transparent 68%),
-      radial-gradient(700px 500px at 0% 0%, var(--atmo-navy), transparent 70%);
+    background-image: radial-gradient(700px 500px at 0% 0%, var(--atmo-navy), transparent 70%);
   }
   .hero::after {
     top: calc(100% - 56px);
   }
 }
-.hero-art {
-  position: absolute;
-  z-index: 0;
-  right: -18%;
-  top: 50%;
-  width: min(640px, 70vw);
-  translate: 0 -50%;
-  pointer-events: none;
-}
-@media (max-width: 1279px) {
-  .hero-art {
-    right: -24%;
-    top: auto;
-    bottom: -10%;
-    translate: 0;
-    width: 120%;
-    max-width: 560px;
-  }
-}
-@media (max-width: 767px) {
-  .hero-art {
-    right: -45%;
-    bottom: -25%;
-    width: 150%;
-    max-width: 520px;
-  }
-}
-/* hero art gate (§8.3, CSS only): art and receipt rows may start hidden, but never past 2.5 s without JS */
+/* receipt gate (§8.3, CSS only): receipt rows may start hidden, but never past 2.5 s without JS */
 @media (prefers-reduced-motion: no-preference) {
-  .hero-art,
   .receipt-row {
     opacity: 0;
     animation: amb-failsafe 0s linear 2.5s forwards;
   }
-  html[data-motion='ready'] .hero-art,
   html[data-motion='ready'] .receipt-row {
     animation: none;
   }
@@ -434,23 +403,18 @@ summary:focus-visible,
   max-width: 440px;
   padding: var(--space-6);
 }
-.receipt::before,
+/* Perforation along the bottom edge only; the top edge is clean. */
 .receipt::after {
   content: '';
   position: absolute;
   left: 12px;
   right: 12px;
+  bottom: -1px;
   height: 4px;
   background-image: radial-gradient(circle, var(--surface) 2px, transparent 2.5px);
   background-size: 12px 4px;
   background-repeat: repeat-x;
   pointer-events: none;
-}
-.receipt::before {
-  top: -1px;
-}
-.receipt::after {
-  bottom: -1px;
 }
 .receipt-row + .receipt-row {
   border-top: 1px solid var(--line);

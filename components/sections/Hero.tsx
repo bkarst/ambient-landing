@@ -1,7 +1,6 @@
 import { landing } from '@/content/landing';
 import { Button } from '@/components/ds/Button';
 import { HeroReceipt } from '@/components/dashboards/HeroReceipt';
-import { HalftoneSun } from '@/components/motion/HalftoneSun';
 import { HeroMotion } from '@/components/motion/HeroMotion';
 import { HeroCtaFocus } from './HeroCtaFocus';
 
@@ -9,12 +8,11 @@ const copy = landing.hero;
 
 /**
  * The hero (§6.2). The h1 is the LCP element and renders visible in the server HTML; only the receipt rows
- * and the halftone sun start hidden, behind a CSS failsafe (§8.3).
+ * start hidden, behind a CSS failsafe (§8.3).
  */
 export function Hero() {
   return (
     <section id="top" className="hero" aria-labelledby="hero-heading">
-      <HalftoneSun className="hero-art" />
       <div className="wrap" style={{ position: 'relative' }}>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 xl:gap-16 items-center" style={{ minHeight: 'min(calc(100svh - 56px), 880px)', paddingBlock: 'var(--space-16)' }}>
           <div className="flex flex-col gap-6" style={{ maxWidth: 560 }}>
