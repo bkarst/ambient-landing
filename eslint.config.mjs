@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Design-system sources and research are read, not linted.
+    "spec/**",
+    "styles/tokens.generated.css",
   ]),
 ]);
 

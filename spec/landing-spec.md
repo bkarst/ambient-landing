@@ -2,13 +2,16 @@
 
 | | |
 |---|---|
-| Status | Draft for review |
+| Status | Implemented, first pass (Oct 13, 2026); open items in §16.1 and §17 |
 | Date | 2026-10-13 |
 | Owner | Ben Karst |
 | Route | `/` (plus `/privacy` and `/terms`, which the interest form needs) |
 | Stack | Next.js 16.4 (App Router, Cache Components), React 19.3, Tailwind CSS 4, GSAP 3.15 |
+| Product source | `~/ambient-work` (repo name Ambient Work), its spec `spec/ambient-work-spec.md`, read Oct 13, 2026 |
 
-The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** are used as in RFC 2119. Items tagged **[Verify]** are claims about the product or the business that could not be checked while this spec was written (see §0.2). Each one MUST be confirmed or cut before launch.
+The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** are used as in RFC 2119.
+
+Claims about what the product does carry one of three tags, defined in §0.2 and listed claim by claim in Appendix D: **[Built]**, **[Planned]** and **[Beyond product spec]**. Claims about the business rather than the product (legal name, pricing, third-party figures) are tagged **[Verify]** and MUST be confirmed or cut before launch.
 
 ---
 
@@ -17,26 +20,37 @@ The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** are 
 ### 0.1 Sources of truth, in order of precedence
 
 1. **Explicit instructions from Ben**, including the copy fixed in §4.1. Those lines are used verbatim.
-2. **This spec.** Where the design system and Apple's HIG disagree, §11.3 decides.
-3. **The Ambiently design system** at `spec/ambiently-design-system/`. **It MUST be used for every visual decision unless this spec or Ben says otherwise.** That covers tokens, type, spacing, radius, elevation, iconography, components, chart rules and voice. Read these first: `README.md` (brand book), `charts.md` (data-viz rules), `tokens.json`, `components/index.d.ts` and every `components/<Name>/README.md`. Open `demo.html` to see the reference dashboard.
-4. **Apple Human Interface Guidelines.** Compliance is a requirement (§11).
-5. **Next.js 16.4 docs** bundled at `node_modules/next/dist/docs/`. `AGENTS.md` requires reading the relevant guide before writing code, because this version breaks older conventions. §13.2 lists the ones that matter here.
-6. **Market research** at `spec/research/AI Spend Intelligence Market Analysis.pdf`. It is the source for audience, value levers and every third-party figure on the page.
+2. **The product** at `~/ambient-work`, for every fact about what Ambiently does and how. §0.2 and §2.4 summarize it; Appendix D maps each product claim on the page to it.
+3. **This spec.** Where the design system and Apple's HIG disagree, §11.3 decides.
+4. **The Ambiently design system** at `spec/ambiently-design-system/`. **It MUST be used for every visual decision unless this spec or Ben says otherwise.** That covers tokens, type, spacing, radius, elevation, iconography, components, chart rules and voice. Read these first: `README.md` (brand book), `charts.md` (data-viz rules), `tokens.json`, `components/index.d.ts` and every `components/<Name>/README.md`. Open `demo.html` to see the reference dashboard.
+5. **Apple Human Interface Guidelines.** Compliance is a requirement (§11).
+6. **Next.js 16.4 docs** bundled at `node_modules/next/dist/docs/`. `AGENTS.md` requires reading the relevant guide before writing code, because this version breaks older conventions. §13.2 lists the ones that matter here.
+7. **Market research** at `spec/research/AI Spend Intelligence Market Analysis.pdf`. It is the source for audience, value levers and every third-party figure on the page.
 
 Nobody edits the design system directory as part of this work. If a component needs something it doesn't do, extend the ported copy (§13.4) and log the gap in §17 so the design system can absorb it.
 
-### 0.2 The product repo was not available
+### 0.2 The product, and how the page talks about it
 
-The real product lives in `~/ambient-work/`. That directory wasn't reachable from the session that wrote this spec, so product facts were inferred from the design system's demo dashboard and the research PDF. Before building, the implementer MUST read `~/ambient-work/` and reconcile:
+The product lives in `~/ambient-work/` and is specified in `~/ambient-work/spec/ambient-work-spec.md` (cited below as *the product spec*). It is a work in progress that will be built out over the coming months. In essence it is **a dashboard of AI spend that ties every request to the person, team and task behind it**:
 
-- which integrations exist, and for each one, whether it is a **spend source** (Anthropic, OpenAI, Cursor, GitHub, Microsoft) or a **work context** source (Jira, monday.com, Notion)
-- what data Ambiently collects and stores (the trust copy in §6.9 assumes metadata only)
-- how usage is attributed to people, teams and tasks
-- alert channels, budget thresholds, export formats
-- product navigation labels (for the dashboard product shot, §6.5)
-- pricing and early-access terms
+- **Capture.** Ambiently sits between a company's AI tools and the model vendors. Coding agents (Claude Code, Codex, OpenCode) send their requests through it. Tools that can't be routed, such as Cursor and Claude Code's remote control, report through their own hooks.
+- **Attribution.** Every request is resolved to an org, a person and a project. The project is the repository, and the repository decides the team.
+- **Tasks.** Requests are grouped into tasks automatically. Each task has a title, a status that moves only on evidence (a passing test run, an opened PR, a deploy) and an exact cost.
+- **Reconciliation.** Live estimates are reconciled to each vendor's bill.
 
-Wherever the product differs, the product wins. Update `content/` and this spec to match.
+§2.4 lists the facts the copy relies on.
+
+**The page describes the product as early-access customers will use it**, not only as it stands today. Every product claim on the page carries one of three tags:
+
+| Tag | Meaning | Before launch |
+|---|---|---|
+| **[Built]** | Exists in `~/ambient-work` today | Re-check that it still holds |
+| **[Planned]** | In the product spec's plan ("Remaining work, in order"), or confirmed by Ben as part of the product (Appendix D says which); not built yet | Allowed. Re-check the status against the repo; cut the claim if the plan drops it |
+| **[Beyond product spec]** | Ben's direction for where the product grows, confirmed by Ben on Oct 13, 2026; the product spec doesn't cover it yet | Allowed only in the What's next section (§6.10), which says these aren't in the product yet. No other section describes one as something Ambiently does. Add each to the product spec when it is next updated |
+
+Appendix D is the ledger: one row per claim, with its tag and the product spec section it rests on. When the product and this spec disagree on a fact, the product wins. Update `content/`, this spec and Appendix D together.
+
+**Product name.** The product's name is **Ambiently** (Ben, Oct 13, 2026). The repository and its spec still say *Ambient Work*; that is an internal name and the page never prints it. The page uses `site.name` everywhere. Update the product spec's title the next time it is revised (§17, question 11).
 
 ---
 
@@ -72,20 +86,20 @@ Pricing page, sign-in, product onboarding, blog, docs, localisation, A/B testing
 
 The research points to companies of 50 to 1,000 employees whose metered AI spend runs from about $5K to $100K+ a month.
 
-- **Economic buyer:** CFO or COO, often with a FinOps or finance lead. Pain: volatile bills, no owner, invoices that don't reconcile to usage.
-- **Champion:** CIO, head of IT or the innovation lead who rolled out the AI tools. Pain: each vendor's analytics covers only that vendor.
-- **Daily users:** engineering, product and team leads. Pain: no way to tell whether the spend produces work.
+- **Economic buyer:** CFO or COO, often with a FinOps or finance lead. Where coding agents are most of the bill, the CTO or VP of Engineering owns it instead. Pain: volatile bills, no owner, invoices that don't reconcile to usage.
+- **Champion:** CIO, head of IT, head of platform or the engineering lead who rolled out the AI tools. Pain: each vendor's console covers only that vendor, and none of them says what the work was.
+- **Daily users:** developers and team leads (the product spec's personas: Developer, Team lead, Org admin). They get a board that fills itself from agent work, showing what's in flight, what shipped and what it cost. Developers create the data without doing anything.
 
-Copy is written for the finance buyer first and the technical champion second. It is never written for engineers alone.
+Copy is written for the finance buyer first and the technical champion second. It is never written for engineers alone. Coding agents are the product's deepest coverage and where most metered spend sits today, so examples lean on engineering work, but every chapter still has to read for finance.
 
 ### 2.2 Message pillars
 
 | Pillar | One line | Where it lands |
 |---|---|---|
-| Receipts | Every token, itemized: who, which model, what for, what it cost. | Hero, dashboards, lens section |
-| Context | Spend tied to the tasks in Jira, monday.com and Notion. | Task chapter, footer tagline |
-| Control | Budgets and forecasts that warn before the invoice. | Spend-over-time and budget chapters |
-| Quiet | Metadata only, team-level by default. **[Verify]** | Trust section, FAQ |
+| Receipts | Every token itemized (who, which model, which task, what it cost) and reconciled to the vendor's bill. | Hero, dashboards, lens section, spend-over-time chapter |
+| Context | Every agent session becomes a task with a status from evidence, linked to the ticket it belongs to. | Tasks chapter, How it works, footer tagline |
+| Control | Budgets and forecasts that warn before the invoice. | Budgets chapter |
+| Quiet | Nothing to tag and nothing in the way: summaries instead of prompts, secrets masked, hosted or in your own cloud. | Trust section, FAQ |
 
 ### 2.3 Voice
 
@@ -93,7 +107,61 @@ Follow the design system's voice rules (`README.md` → *Voice and content*): pl
 
 **Sanctioned exceptions.** The hero and footer taglines are questions supplied by Ben. They break the "short declaratives with a full stop" rule on purpose and are used verbatim. No other headline on the page is a question.
 
-**Brand spellings:** Anthropic, Microsoft, Cursor, OpenAI, **GitHub** (capital H), **Jira** (Atlassian dropped the all-caps "JIRA" in 2017), **monday.com** (lowercase), Notion. Product names that appear in copy: Claude, ChatGPT, GitHub Copilot, Microsoft Copilot.
+**Brand spellings:** Anthropic, Microsoft, Cursor, OpenAI, **GitHub** (capital H), **Jira** (Atlassian dropped the all-caps "JIRA" in 2017), **monday.com** (lowercase), Notion. Product names that appear in copy: Claude Code, Codex, OpenCode, GitHub Copilot, Microsoft Copilot, Azure OpenAI, and model names such as Claude Sonnet and GPT-5. ChatGPT is only ever named as a sign-in ("Codex on a ChatGPT plan"), never as a tool Ambiently tracks (§2.4).
+
+**Product vocabulary.** The product spec's internal terms are precise but not what buyers say. Use the left column:
+
+| Say | Don't say | Why |
+|---|---|---|
+| AI tools; coding agents; the tool's name (Claude Code, Codex, Cursor) | harness | "Harness" is the product spec's internal term |
+| "send requests through Ambiently", "report to Ambiently" | router, proxy, gateway, LiteLLM, callback | Mechanism, not value. How it works (§6.8) is the one place to say how, and even there in plain words |
+| task | session, turn, card | A task is the unit people recognize; sessions and turns are how the product builds one |
+| status: In progress, Tested, Completed, Deployed | stage, state | The product's own labels, in its order (Planned comes first) |
+| evidence: tests passed, PR opened, deployed | signals | The product's evidence chips read "Tests passed", "PR opened", "PR merged", "Pushed", "Deployed" |
+| estimated, reconciled | exact, real-time cost | A live number is an estimate until the vendor's bill confirms it (§2.4) |
+| summary | transcript, log | People see summaries, not transcripts |
+| understand, see, explain | monitor, watch, track employees, productivity score | The product spec names surveillance as its biggest adoption risk |
+
+### 2.4 The product behind the page
+
+These are the product facts the copy relies on, with their status on Oct 13, 2026. Section names refer to the product spec.
+
+| # | Fact | Where the page uses it | Status |
+|---|---|---|---|
+| P1 | **Every request resolves to an org, a person and a project.** The person comes from the account the tool is signed in to, a personal key or a per-machine hook token. The project is the repository (by its git remote), and the repository decides the team, so spend lands on the team whose work it was, not whoever's key paid. (Task ownership and attribution) | Teams chapter, How it works | [Built] |
+| P2 | **Nothing is dropped.** A request that can't be attributed is still recorded, never refused, and waits in an Unattributed queue until someone assigns it. Assigning it gives that person its past activity too. | Tasks chapter ("shown, not hidden"), lens residual row | [Built] |
+| P3 | **Tasks build themselves.** Requests are grouped into sessions and turns, then into tasks. A small model writes each task's title (an imperative phrase, such as "Fix flaky login test") and a description of up to three sentences from a short digest, never the full transcript. Turns that only read and edit nothing are filed as Questions: counted in cost, hidden from the board. Nobody tags anything. (Task detection and summarization) | Hero lede, Tasks chapter, How it works | [Built]; titles from the model partly built |
+| P4 | **Status moves on evidence.** Planned → In progress → Tested → Completed → Deployed. A passing test run after the last edit moves a task to Tested; commit, push and an opened PR move it to Completed; a production deploy moves it to Deployed. A manual move locks the status. (Status model and inference) | Tasks chapter, How it works | [Built] from what the agent ran; [Planned] from GitHub (CI, PRs, deployments) |
+| P5 | **Cost per task is exact.** A task's cost is the sum of its own requests, per contributor, model and tool, with subagents rolled in. Ambiently's own model use (titles, summaries) is recorded as overhead on a separate line, targeted at 2% or less of routed spend. | Tasks chapter, FAQ | [Built]; the 2% cap [Planned] |
+| P6 | **Estimated, then reconciled.** Costs show as *Estimated* in real time and *Reconciled* once the vendor's billing data lands (minutes for Anthropic, about a day for cloud billing exports). Daily reconciliation scales estimates so team totals equal the bill exactly, and they become *Final* after month close. A variance alert fires when estimate and bill differ by more than 5%. (Billing alignment and reconciliation) | Spend-over-time chapter, product shot, How it works | [Planned] |
+| P7 | **Plan seats are valued too.** Claude Code on a Claude plan and Codex on a ChatGPT plan have no per-token bill. Their usage is priced at list rates, and orgs choose between showing that value as "covered by subscription" or spreading each seat's fee across that person's tasks. | Vendors and models chapter | List pricing [Built]; label and seat-fee option [Planned] |
+| P8 | **Budgets, forecasts, exports.** Team budgets and month-end forecasts on reconciled cost; monthly chargeback exports per team and cost center in CSV and FOCUS (the format FinOps tools read). | Budgets chapter, How it works | [Planned] |
+| P9 | **Notifications.** An in-app inbox, plus Slack or email for stuck agents, deploys and daily or weekly digests; outbound webhooks. | Budgets chapter | [Planned] |
+| P10 | **Setup is one command, or none.** On company-managed laptops, device management pushes the settings and people do nothing. Elsewhere each person runs one command, which finds Claude Code, Codex, Cursor and OpenCode and points them at Ambiently. Plan sign-ins keep working and keep paying. It reads which account each tool is signed in to and the person's email, never a password, key or token, backs up every file it changes, and one command undoes it. | How it works, FAQ | One command [Built]; managed laptops [Planned] |
+| P11 | **Never in the way.** Tracking never fails or delays a request: if tracking breaks, the request still goes through. The work on a request's path targets under 2 ms at p99. Prompt caching keeps working through Ambiently (measured on Claude Code and Codex). | Trust, FAQ | Fail-open and caching [Built]; the 2 ms figure is a target until the load test runs |
+| P12 | **Summaries, not prompts.** Each team chooses who may see raw prompts: nobody (the default), the task's owner, or the whole team. Every view of a prompt is written to the audit log. People can see everything collected about their own work. | Trust, FAQ | Visibility levels and audit [Built]; the full view of one's own data [Planned] |
+| P13 | **Secrets masked, content expires.** API keys, tokens, private keys and passwords are masked before anything is stored or summarized. Raw content is encrypted with a key per org and deleted after 30 days by default (configurable from 0, never stored, to 90 days); usage metadata is kept for 13 months. | Trust, FAQ | [Built]; deletion and export on request [Planned] |
+| P14 | **No leaderboards.** Ambiently never ranks individuals. Per-person views are visible to that person and, only where the org turns it on, to admins. | Teams chapter, FAQ | [Planned] (Insights guardrail) |
+| P15 | **Hosted or self-hosted.** Customers choose: Ambiently hosted, or deployed into their own cloud account. The product spec builds self-hosting first and leaves a hosted version open; Ben decided on Oct 13, 2026 that both are offered. | Trust, FAQ | Self-hosted: Docker Compose [Built], Helm chart [Planned]; hosted [Planned] (confirmed by Ben, not yet in the product spec) |
+| P16 | **Planning and linking.** Teams can plan tasks on the board. A task key in a branch name (`pay-142-rate-limit`) links agent work to the planned task, and agents can pick up tasks themselves through Ambiently's MCP server. Two-way Jira and Linear sync comes after GA. | Tasks chapter | Keys and planned tasks [Built]; MCP [Planned]; Jira [Planned, after GA] |
+| P17 | **Measured accuracy.** On real Claude Code sessions, the cost Ambiently recorded equalled Claude Code's own report to seven decimal places ($0.1028881 against $0.1028881), and token counts for Codex sessions matched Codex's to the token. (Implementation status, Verified so far) | Vendors and models chapter (first-party proof) | [Built] |
+| P18 | **Waste found during setup.** Behind a custom endpoint, Claude Code sends every tool definition on every call, about 14,500 extra prompt tokens a call, unless tool search is on; Ambiently's setup turns it on. OpenCode over the Chat Completions format got almost no cache reads and cost 2.6 to 4.9 times as much for the same work; Ambiently's Setup page warns when that happens. (Findings from real traffic) | Waste chapter (first-party proof) | [Built] |
+| P19 | **Views.** The product's navigation is Home, Board, Planning, Insights and Setup, plus Settings for admins. Insights answers "where tokens go and what they buy", with at most four headline numbers. | Product shot (§6.5) | Home, Board, Planning, Setup [Built]; Insights [Planned] |
+
+**Confirmed by Ben, not yet in the product spec** (Oct 13, 2026). These are part of the product and tagged **[Planned]**. They should be added to the product spec the next time it is updated:
+
+- the monday.com and Notion integrations (work context, like Jira)
+- Microsoft Copilot (spend)
+- hosted and self-hosted, both offered (P15)
+
+**Confirmed as direction, still beyond the product spec** (Ben, Oct 13, 2026). Ambiently grows into a dashboard for all AI spend. These stay tagged **[Beyond product spec]** and appear on the page only in What's next (§6.10), which says in its own copy that none of them ships yet. No chapter, bullet, chart, alert or FAQ answer presents one as a capability:
+
+- savings recommendations with a monthly figure on each fix: idle seats, caching gaps, model routing
+- models that cost more than the work needs
+- budgets by vendor or project (the spec has team budgets), and thresholds people choose
+- alerts that name a fix ("Prompt caching is off for 3 Anthropic keys")
+
+**Not offered yet, and never implied.** Compatibility is with coding agents: Claude Code, Codex, OpenCode and Cursor, with more to come. It also covers apps that call the Anthropic or OpenAI API through Ambiently. Usage inside chat apps such as ChatGPT and the Claude apps is not tracked (Ben, Oct 13, 2026). The page never names ChatGPT or the Claude apps as tracked tools. "Claude" appears only in tool and model names (Claude Code, Claude Sonnet).
 
 ---
 
@@ -158,17 +226,19 @@ export const site = {
     twitterHandle: undefined as string | undefined,     // [Verify]
   },
 
-  // Order is Ben's and is the marquee order. `role` drives the "How it works" diagram.
+  // Order is Ben's and is the marquee order. `roles` drives the "How it works" diagram and the FAQ:
+  // 'spend' = where tokens are bought, 'context' = where the work is tracked. GitHub is both.
+  // Status of each integration in the product: §6.3 table and Appendix D.
   integrations: [
-    { id: 'anthropic', name: 'Anthropic',  role: 'spend',   products: ['Claude', 'Claude Code', 'API'] },
-    { id: 'microsoft', name: 'Microsoft',  role: 'spend',   products: ['Microsoft Copilot', 'Azure OpenAI'] },
-    { id: 'cursor',    name: 'Cursor',     role: 'spend',   products: ['Cursor'] },
-    { id: 'openai',    name: 'OpenAI',     role: 'spend',   products: ['ChatGPT', 'API'] },
-    { id: 'github',    name: 'GitHub',     role: 'spend',   products: ['GitHub Copilot'] },
-    { id: 'jira',      name: 'Jira',       role: 'context', products: ['Jira'] },
-    { id: 'monday',    name: 'monday.com', role: 'context', products: ['monday.com'] },
-    { id: 'notion',    name: 'Notion',     role: 'context', products: ['Notion'] },
-  ],                                                    // roles and products: [Verify] against ~/ambient-work
+    { id: 'anthropic', name: 'Anthropic',  roles: ['spend'],            products: ['Claude Code', 'Claude API'] },
+    { id: 'microsoft', name: 'Microsoft',  roles: ['spend'],            products: ['Azure OpenAI', 'Microsoft Copilot'] },
+    { id: 'cursor',    name: 'Cursor',     roles: ['spend'],            products: ['Cursor'] },
+    { id: 'openai',    name: 'OpenAI',     roles: ['spend'],            products: ['Codex', 'OpenAI API'] },
+    { id: 'github',    name: 'GitHub',     roles: ['spend', 'context'], products: ['GitHub Copilot', 'pull requests, CI and deployments'] },
+    { id: 'jira',      name: 'Jira',       roles: ['context'],          products: ['Jira'] },
+    { id: 'monday',    name: 'monday.com', roles: ['context'],          products: ['monday.com'] },
+    { id: 'notion',    name: 'Notion',     roles: ['context'],          products: ['Notion'] },
+  ],
 
   contact: { email: 'hello@ambiently.example' },        // [Verify]
   social: {} as Partial<Record<'linkedin' | 'x' | 'github', string>>,
@@ -237,14 +307,15 @@ Both are read from `site.taglines`. Punctuation, capitalisation and wording MUST
 | 2 | Hero | `#top` | Tagline, lede, CTAs, live receipt, halftone sun |
 | 3 | Integrations | `#integrations` | Rolling logos |
 | 4 | Why receipts | `#why` | The problem, in cited figures |
-| 5 | Dashboards | `#dashboards` | The product shot: a full overview dashboard |
+| 5 | Dashboards | `#dashboards` | The product shot: the product's Insights view |
 | 6 | Lens | `#lens` | One invoice, four ways to read it (pinned on wide screens) |
 | 7 | Value chapters | `#spend-over-time`, `#vendors-and-models`, `#tasks`, `#teams`, `#waste`, `#budgets` | Six chart-led explanations of value |
 | 8 | How it works | `#how-it-works` | Connect, attribute, act |
 | 9 | Trust | `#trust` | Quiet by design |
-| 10 | FAQ | `#faq` | Objections, plus long-tail search terms |
-| 11 | Interest form | `#request-access` | The conversion |
-| 12 | Footer | — | Footer tagline, links, legal |
+| 10 | What's next | `#whats-next` | Direction, stated as not yet built (§6.10) |
+| 11 | FAQ | `#faq` | Objections, plus long-tail search terms |
+| 12 | Interest form | `#request-access` | The conversion |
+| 13 | Footer | — | Footer tagline, links, legal |
 
 ### 4.3 Heading outline
 
@@ -265,6 +336,8 @@ h1  AI spend tracking — AI tokens are money, you want receipts, right?   (eyeb
   h2  Get warned before the budget runs out.
   h2  Connect once. Receipts from then on.
   h2  Quiet by design.
+  h2  Coming next.
+      h3  (card titles in What's next)
   h2  Questions and answers.
   h2  Get your first receipts.
   (footer) h2 visually hidden "Site footer"; link-group labels are h3 in overline style
@@ -325,7 +398,7 @@ The skip link is visually hidden until focused. It then appears top-left as a `B
 
 ### 5.3 Main landmark
 
-`<main id="content">` wraps sections 2–11. Each section is a `<section aria-labelledby="…">` pointing at its heading.
+`<main id="content">` wraps sections 2–12. Each section is a `<section aria-labelledby="…">` pointing at its heading.
 
 ---
 
@@ -343,7 +416,7 @@ See §5.2.
 
 - **Eyebrow** (`overline`, `ink-muted`, set in capitals in the source as the design system requires): `AI SPEND TRACKING`. It sits *inside* the `h1` as its first line (`<h1><span class="overline">AI SPEND TRACKING</span><span class="display">…</span></h1>`). That puts the category keyword in the `h1` without hidden text (§10.5). A visually hidden `: ` between the spans makes screen readers pause.
 - **Headline** (`display`, `ink`): `site.taglines.hero`.
-- **Lede** (`body-large`, `ink-secondary`, max 560 px): "Ambiently itemizes every AI token your company buys and ties it to the person, the model and the task it paid for."
+- **Lede** (`body-large`, `ink-secondary`, max 560 px): "Ambiently itemizes every AI token your company buys and ties it to the person, the model and the task it paid for. Nobody has to tag anything." The second sentence is the product's sharpest difference from tagging-based cost tools (§2.4, P3).
 - **Primary CTA:** `Button variant="primary" size="lg"`, label "Request access", linking to `#request-access`. When activated it also moves focus to the form's first field.
 - **Secondary CTA:** `Button variant="secondary" size="lg"`, label "See the dashboards", linking to `#dashboards`.
 - **Microcopy** (`caption`, `ink-muted`) under the buttons: "Four fields, two of them optional. Takes under a minute."
@@ -355,13 +428,13 @@ A `Card` styled as a receipt, built from design-system parts, about 400 px wide 
 
 - **Header row:** title "Receipt" (`title-3`), subtitle "Today · Example Co." (`caption`), and `Badge tone="live"` reading "Live" in the action slot. The live dot is the design system's only sanctioned loop (§8.2).
 - **Six line items** from `sampleData.receipt.items`. Each row has two lines:
-  - Line 1: task (`label`, `ink`), with amount right-aligned in `tabular` figures.
-  - Line 2 (`caption`, `ink-muted`): the source tool's 16 px monochrome symbol, then the tool name, team, model (in `code`) and token count.
+  - Line 1: the task (`label`, `ink`), with the amount right-aligned in `tabular` figures. When the task lives in a tracker (Jira, monday.com, Notion), the tracker's 16 px symbol and the task key come first. Titles are imperative phrases, as the product writes them ("Refactor billing service", not "Billing service refactor").
+  - Line 2 (`caption`, `ink-muted`): the 16 px symbol of the vendor whose tokens were spent, then the tool (Claude Code, Cursor, GitHub Copilot…), the team, the model (in `code`) and the token count. The task's status ends the line ("Tested", "In progress") in `ink-secondary`, so each row shows what the money bought and how far the work got.
 - **"+ 1,284 more line items"** (`caption`, `ink-muted`).
 - **Total row:** "Total today", `stat` 28 px, "$4,218.00", with `Delta value={12.2} upIsGood={false} period="vs yesterday"`.
 - **Sample notice:** `Badge tone="neutral"` reading "Sample data", top-right outside the card, or as the card's footer caption on compact.
 
-The six line items use all eight integrations (Appendix B.1). The receipt's numbers MUST reconcile: line-item costs follow from the fixture price table, and the total is the day's fixture value.
+The six line items use all eight integrations (Appendix B.1). The receipt's numbers MUST reconcile: line-item costs follow from the fixture price table, and the total is the day's fixture value. "Live" is honest: the product's board updates over a live stream within seconds of a task changing **[Built]**.
 
 **Halftone sun** (`components/motion/HalftoneSun.tsx`)
 
@@ -386,6 +459,23 @@ The mark's 325 dots (the `LOGO_DOTS` data from the design system's `Logo`), draw
 - Rolling logos for the eight entries in `site.integrations`, in that order.
 - Caption under the row (`caption`, `ink-muted`): "Anthropic, Microsoft, Cursor, OpenAI, GitHub, Jira, monday.com and Notion." Generated from config. It gives screen readers and crawlers one clean sentence, and on hover each logo's `title` names it.
 
+**What each logo means in the product**
+
+The marquee shows Ben's eight, in his order. This is what each one stands for, so the copy elsewhere describes it correctly:
+
+| Logo | In the product | Status |
+|---|---|---|
+| Anthropic | Claude Code sends its requests through Ambiently, on a Claude plan or an API key; any app on the Claude API can too. Billing is reconciled from Anthropic's Usage and Cost API. | Claude Code and the API [Built]; billing [Planned] |
+| OpenAI | Codex sends its requests through Ambiently, on a ChatGPT sign-in or an API key; any app on the OpenAI API can too. Billing is reconciled from OpenAI's Costs endpoint. | Codex and the API [Built]; billing [Planned] |
+| Cursor | Cursor's agent calls models from Cursor's servers, so it reports through its hooks: prompts, shell commands, edits and token counts per turn. | [Built]; no real Cursor session captured yet |
+| GitHub | Spend: GitHub Copilot, when a developer brings their own model provider. Work: pull requests, CI runs and deployments move tasks to Tested, Completed and Deployed. | Both [Planned] |
+| Microsoft | Spend: Azure OpenAI billing, reconciled from Azure Cost Management, and Microsoft Copilot usage. | Azure [Planned]; Microsoft Copilot [Planned] (confirmed by Ben, not yet in the product spec) |
+| Jira | Two-way sync, after GA. Until then, Ambiently's own task keys (`PAY-142`) link work through branch names, the same way a Jira key would. | [Planned] |
+| monday.com | Work context: tasks linked to monday.com items, the way Jira tickets are | [Planned] (confirmed by Ben, not yet in the product spec) |
+| Notion | Work context: tasks linked to Notion pages, the way Jira tickets are | [Planned] (confirmed by Ben, not yet in the product spec) |
+
+OpenCode is supported **[Built]** but isn't one of Ben's eight. It is named in the FAQ, not the marquee.
+
 **Logo assets**
 
 - Every logo MUST come from the company's official brand or press kit. Record its `source` and `guidelines` URLs in the logo index. Logos are never redrawn, traced from screenshots or taken from icon packs.
@@ -403,7 +493,7 @@ The mark's 325 dots (the `LOGO_DOTS` data from the design system's `Logo`), draw
 - **Reduce Motion:** no movement. The eight logos sit in a centred wrapping row (4 × 2 on compact) and the pause button is hidden.
 - Edges fade with `mask-image: linear-gradient(90deg, transparent, #000 64px, #000 calc(100% - 64px), transparent)`. This is a mask, not a coloured gradient, so it doesn't break the design system's no-gradients rule.
 
-**SEO.** The logos are SVG, not images, so the visible caption carries the names. The FAQ (§6.10) repeats them in prose.
+**SEO.** The logos are SVG, not images, so the visible caption carries the names. The FAQ (§6.11) repeats them in prose.
 
 ### 6.4 Why receipts (`#why`)
 
@@ -424,7 +514,9 @@ The mark's 325 dots (the `LOGO_DOTS` data from the design system's `Logo`), draw
 
 - Every figure MUST trace to a primary source that someone has actually opened. Record the URL, title, publisher, date and the exact quoted sentence in `content/sources.ts` before launch. The research PDF names the sources but doesn't link them. **[Verify]**
 - Each figure is quoted with its scope ("of practitioners", "in 2026"). Never round in our favour.
-- No figure attributed to a competitor (for example Ramp) appears without Ben's sign-off (§17, question 9).
+- Figures from competitors (Ramp, Rippling) may be cited (Ben, Oct 13, 2026; §17, question 9). They are attributed by name like any other source and held to the same rules. The approved ones are listed in Appendix C.
+
+**First-party figures** (§6.7.2 and §6.7.5) come from Ambiently's own tests, recorded in the product spec. Each one is attributed to "Ambiently" with the month it was measured and listed in `content/sources.ts` with the product spec section it comes from. Re-run the measurement before launch if the product has changed since. Never present one as a customer result.
 
 **Layout:** heading and body on the left (5/12), the three figures on the right (7/12) in a column with `line` dividers. At compact everything stacks.
 
@@ -436,19 +528,21 @@ The mark's 325 dots (the `LOGO_DOTS` data from the design system's `Logo`), draw
 
 - Overline: `DASHBOARDS`.
 - `h2` (`title-1`): "Every AI token, itemized."
-- Body (`body-large`): "One view across every AI vendor. Spend by day, by model, by team and by task, each number compared with the last period."
-- **The product shot:** a full overview dashboard rendered live from design-system components (not a screenshot), framed in a `radius-xl` panel with a `line` hairline. It is a re-composition of `demo.html` for AI spend.
+- Body (`body-large`): "One view across every AI vendor. Spend by day, by model, by team and by task, each number compared with the last period and reconciled to the vendor's bill."
+- **The product shot:** the product's Insights view rendered live from design-system components (not a screenshot), framed in a `radius-xl` panel with a `line` hairline. It is a re-composition of `demo.html` for AI spend. Insights is the product view that answers "where tokens go and what they buy" (§2.4, P19) **[Planned]**.
 
 **Product shot composition** (wide)
 
-- **`Sidebar`:** the lockup, then Overview (active), Spend, Models, Teams, Tasks, Budgets, Alerts (badge 3); a Workspace section with Integrations and Settings; footer `Badge tone="live"` reading "All sources live". Labels are **[Verify]** against the product's navigation. The sidebar is decorative here: wrap it in `inert` with `aria-hidden="true"` so its buttons aren't tab stops that do nothing.
-- **Title row:** "Overview" (`title-2`), caption "AI spend across 8 sources, Example Co., September". Actions: `Select size="sm"` time range (functional, §7.3), `Button variant="secondary" size="sm" icon="download"` reading "Export" (inert, `aria-disabled`, tooltip "Available in the product"), and **no primary button**. The page's primary actions live outside the product shot.
-- **Four stat tiles** (`Card compact` + `Stat`): Spend this month **(hero)**, Spend today, Tokens today, Active users.
+- **`Sidebar`:** the lockup, then the product's own navigation: Home (badge 3, for its "Needs you" list), Board, Planning, Insights (active), Setup; a Workspace section with Settings; footer `Badge tone="live"` reading "All sources live". The sidebar is decorative here: wrap it in `inert` with `aria-hidden="true"` so its buttons aren't tab stops that do nothing.
+- **Title row:** "Insights" (`title-2`), caption "AI spend across 8 sources, Example Co., September". Actions: `Select size="sm"` time range (functional, §7.3), `Button variant="secondary" size="sm" icon="download"` reading "Export" (inert, `aria-disabled`, tooltip "CSV or FOCUS, in the product"), and **no primary button**. The page's primary actions live outside the product shot.
+- **Four stat tiles** (`Card compact` + `Stat`): Spend this month **(hero)**, with the caption "Reconciled through Sep 29. Today is estimated." (§2.4, P6); Spend today; Tokens today; Active users. Four is also the product's own limit for headline numbers in Insights.
 - **Row 2 (1.6 : 1):** `LineChart` "Daily spend" (September vs August); `BarChart` grouped "Spend by token type" (weekly, Output vs Input).
 - **Row 3 (1.2 : 1 : 0.8):** `BarChart` horizontal "Top models by spend"; `LineChart` "Tokens by hour" (today); `Ring` × 2 "Health": Budget used 92%, Cache hit rate 41%.
 - A `Badge tone="neutral"` reading "Sample data" sits in the frame's top-right corner. Caption under the frame: "Illustrative data for Example Co., a 340-person company."
 
 Data for every element is in Appendix B.2. The `Stat` hero here is the page's **only** `hero` stat, as the design system requires.
+
+Labels follow the product: views are named as in its sidebar, and costs say Estimated or Reconciled where the difference matters. If the product renames a view, rename it here.
 
 **Layout**
 
@@ -494,7 +588,7 @@ Six chapters, each a full section. They alternate sides on wide (copy left / vis
 - an **`h2`** (`title-1`)
 - a **"why it matters" paragraph** (`body-large`, `ink-secondary`, ≤ 640 px)
 - **three "what you see" bullets** (`body`, each starting with a 16 px design-system icon in `accent-ink`)
-- an optional **proof line**: a cited third-party figure in `caption` with a source link, held to the rules in §6.4
+- an optional **proof line**: a cited figure in `caption` with a source link, held to the rules in §6.4 (third-party or first-party)
 - a **visual**: one composite of `Card`s, each with a `title`, a `subtitle` naming range and unit, and a **takeaway** line (`label`, `ink`) under the chart summarizing what it shows, as HIG's charting guidance asks
 - a "Sample data" caption under the visual (`caption`, `ink-muted`)
 
@@ -504,7 +598,7 @@ Data for every chart is in Appendix B.4–B.9.
 
 - Overline `SPEND OVER TIME`. `h2` "Know the total before the invoice does."
 - Why: "AI bills arrive once a month as a single number. Ambiently shows spend every day, against last month and against budget, so a spike becomes a Tuesday conversation instead of a month-end surprise."
-- Bullets: `calendar` "Spend today, this month and forecast to month end." · `arrow-up-right` "Every number compared with the last period." · `check` "Invoices reconciled to usage, so finance closes faster." **[Verify]**
+- Bullets: `calendar` "Spend today, this month and forecast to month end." **[Planned]** (forecast) · `arrow-up-right` "Every number compared with the last period." · `check` "Estimates reconciled to each vendor's bill every day, so the numbers match the invoice." **[Planned]** (§2.4, P6)
 - Proof: "Nearly a third of teams need a full week to trace a cost spike." (Harness, State of AI in FinOps 2026)
 - Visual: `Card` "Daily spend" (subtitle "September compared with August, USD"), `LineChart` with 2 series and a time-range `Select` (§7.3). Beside it on wide, below on compact: two `Stat` tiles: "Spend in September" $128K (Δ −8.2% vs August, `upIsGood: false`) and "Forecast, October" $143K (caption "At current pace, over the $140K budget").
 - Takeaway: "September came in 8% under August despite a late-month rise."
@@ -512,8 +606,9 @@ Data for every chart is in Appendix B.4–B.9.
 #### 6.7.2 Vendors and models (`#vendors-and-models`)
 
 - Overline `VENDORS AND MODELS`. `h2` "See every vendor and model on one ledger."
-- Why: "Each vendor's console shows its own slice. Ambiently puts Anthropic, OpenAI, Cursor, GitHub and Microsoft on one ledger, broken down by model and token type, so you can see what each model costs for the work it does."
-- Bullets: `model` "Spend by vendor, model and token type." · `spend` "Seat licences and metered usage side by side." · `filter` "Models that cost more than the work needs." **[Verify]**
+- Why: "Each vendor's console shows its own slice. Ambiently puts Anthropic, OpenAI, Cursor, GitHub and Microsoft on one ledger, broken down by model, tool and token type, so you can see what each model costs for the work it does."
+- Bullets: `model` "Spend by vendor, model, tool and token type." **[Built]** for the tools routed today · `spend` "Plan seats and metered usage side by side, with plan usage valued at list price." (§2.4, P7) · `filter` "The most expensive tasks, and the model behind each one." **[Planned]** (Insights ranks the most expensive tasks, P19). "Models that cost more than the work needs" moved to What's next (§6.10).
+- Proof (first-party, §6.4 rules for first-party figures): "In testing, the cost Ambiently recorded for real Claude Code sessions matched Claude Code's own figure to seven decimal places." (Ambiently, October 2026; §2.4, P17)
 - Visual: `Card` "Top models by spend" (`BarChart horizontal valueLabels`, "September, USD"); `Card` "Spend by token type" (`BarChart` grouped, 2 series Output and Input, "September, by week, USD").
 - Takeaway: "Output tokens cost nearly twice what input does, and the gap is growing."
 
@@ -522,16 +617,17 @@ Data for every chart is in Appendix B.4–B.9.
 This chapter is the answer to the footer question.
 
 - Overline `TASKS`. `h2` "Tie every token to a task."
-- Why: "A seat count says who has access. A receipt says what the money did. Ambiently links usage to the tickets, items and pages in Jira, monday.com and Notion, so you can see what a feature, a campaign or a support queue cost in AI." **[Verify]** the attribution mechanism.
-- Bullets: `data` "Spend by task type, project and ticket." · `people` "Cost per task, compared across teams." · `info` "Untagged spend shown, not hidden."
-- Visual: `Card` "Spend by task type" (`BarChart horizontal valueLabels`, "September, USD"; "Not linked to a task" last). `Card` "Recent receipts": a five-row table (Appendix B.6) with columns Task, Source, Team, Model or tool, Tokens, Cost. It's a real `<table>` with `<caption>`, `tabular` figures and `code` for model names. On compact it shows Task and Cost, with the other columns as a second line, never a horizontally scrolling table.
+- Why: "A seat count says who has access. A receipt says what the money did. Ambiently turns every AI session into a task with a title, a status and a cost, without anyone tagging anything, and links it to its ticket in Jira, monday.com or Notion. So you can see what a feature, a fix or a launch cost in AI, and whether it shipped."
+  - Mechanism, for anyone asked: tasks come from grouping each session's requests (§2.4, P3) **[Built]**. Status comes from evidence (P4) **[Built]**. Ticket links use a task key in the branch name today (P16) **[Built]**; Jira, monday.com and Notion links are **[Planned]** (monday.com and Notion confirmed by Ben, not yet in the product spec).
+- Bullets: `data` "Every session becomes a task, titled and costed automatically." **[Built]** · `check` "Status from evidence: tests passed, PR opened, deployed." **[Built]** (GitHub evidence **[Planned]**) · `info` "Spend not linked to a task yet is shown, not hidden." **[Built]** (P2)
+- Visual: `Card` "Spend by task type" (`BarChart horizontal valueLabels`, "September, USD"; "Not linked to a task" last). `Card` "Task receipts": a five-row table (Appendix B.6) with columns Task, Tracker, Team, Model or tool, Tokens, Cost, Status. Status uses the product's labels and plain text, not colour, as the product does. It's a real `<table>` with `<caption>`, `tabular` figures and `code` for model names. On compact it shows Task and Cost, with the other columns as a second line, never a horizontally scrolling table.
 - Takeaway: "Code review and bug fixes are 31% of spend."
 
 #### 6.7.4 Teams (`#teams`)
 
 - Overline `TEAMS`. `h2` "See which teams drive the spend."
-- Why: "In most companies a small group drives most of the spend, and that's often good news. Ambiently shows the pattern by team, so you can invest where AI pays off and coach where it doesn't."
-- Bullets: `people` "Spend and active users by team." · `spend` "Cost per active user, month over month." · `security` "Team-level by default. Individual views are an admin choice." **[Verify]**
+- Why: "In most companies a small group drives most of the spend, and that's often good news. Ambiently shows the pattern by team, counting spend for the team whose work it was rather than whoever's key paid, so you can invest where AI pays off and coach where it doesn't." (§2.4, P1)
+- Bullets: `people` "Spend and active users by team." · `spend` "Cost per active user, month over month." · `security` "No leaderboards. Each person sees their own usage, and admins see it only if your company turns that on." **[Planned]** (P14)
 - Proof: "At Rippling, 10 to 15% of employees drove about 60% of AI spend." (TechCrunch, via AI Weekly)
 - Visual: `Card` "Spend by team" (`BarChart horizontal valueLabels`). `Card` "Concentration": `Ring` value 58, text "58%", label "of spend from the top 12% of users". `Card` "Active AI users" (`LineChart` single series, 8 weeks) with a `Stat` "Cost per active user" $441 (Δ −11.7% vs August, `upIsGood: false`).
 - Takeaway: "Engineering is 56% of spend with 31% of active users."
@@ -539,32 +635,34 @@ This chapter is the answer to the footer question.
 #### 6.7.5 Waste (`#waste`)
 
 - Overline `WASTE`. `h2` "Find the waste."
-- Why: "Some spend buys nothing: idle seats, prompts that could have been cached, a large model doing a small model's job. Ambiently finds it and puts a monthly figure on each fix." **[Verify]** that recommendations exist in the product.
-- Bullets: `people` "Idle seats across Cursor, GitHub Copilot and Microsoft Copilot." · `storage` "Prompt-caching gaps by API key." · `model` "Model routing suggestions with expected savings."
-- Proof: "Practitioners estimate 26% of AI spend is wasted." (Harness, 2026) · "AngelList found a $10K-a-month leak from missing prompt caching." (SiliconANGLE)
-- Visual: `Stat` "Savings available" $12.3K, unit "/ month", caption "9.6% of September spend". `Card` "Savings by fix" (`BarChart horizontal valueLabels`). `Ring` value 41, label "Cache hit rate".
-- Takeaway: "Turning on prompt caching for three keys saves $4.9K a month."
+- Why: "Some spend buys nothing: prompts that could have been cached, a large model doing a small model's job, a tool resending the same context on every call. Ambiently records the tokens behind every request, cache reads and writes included, so the waste shows up next to the work that caused it." The data is recorded on every request today: model, tool, input, output, cache-read and cache-write tokens **[Built]**. The Insights view that ranks the most expensive tasks and shows the spread of cost per task is **[Planned]**. Savings recommendations with a figure on each fix are direction, not product, and appear only in What's next (§6.10).
+- Bullets: `data` "The ten most expensive tasks, one click from the sessions behind them." **[Planned]** · `storage` "Cache reads and writes on every request, by tool and model." **[Built]** (data) · `model` "Ambiently's own model use on its own line, capped at 2% of your spend." (P5; the cap **[Planned]**)
+- Proof: "Practitioners estimate 26% of AI spend is wasted." (Harness, 2026) · "AngelList found a $10K-a-month leak from missing prompt caching." (SiliconANGLE) · First-party: "Behind a company endpoint, Claude Code can resend every tool definition on every call, about 14,500 extra tokens each time. Ambiently's setup switches that off." (Ambiently, October 2026; §2.4, P18) **[Built]**
+- Visual: `Card` "Most expensive tasks" (`BarChart horizontal valueLabels`, "September, month to date, USD", five tasks). `Card` "Cache hit rate by tool" (`BarChart horizontal valueLabels`, "September, share of prompt tokens served from cache", four tools, `format: 'percent'`). `Ring` value 41, label "Cache hit rate", caption "All tools, September".
+- Takeaway: "Claude Code serves 55% of its prompt tokens from cache. The OpenAI API serves 10%."
 
 #### 6.7.6 Budgets (`#budgets`)
 
 - Overline `BUDGETS`. `h2` "Get warned before the budget runs out."
-- Why: "Set a budget for a team, a vendor or the whole company. Ambiently forecasts the month from the current pace and alerts you while there's still time to act."
-- Bullets: `spend` "Budgets by team, vendor or project." · `clock` "Forecast to month end from current pace." · `alerts` "Alerts at the thresholds you choose, by email or Slack." **[Verify]** the channels.
+- Why: "Set a budget for each team. Ambiently forecasts the month from the current pace, on reconciled cost, and alerts you while there's still time to act."
+- Status: team budgets and forecasts **[Planned]** (§2.4, P8). Email and Slack are the product's planned notification channels **[Planned]** (P9). Budgets by vendor or project, thresholds people choose and alerts that name a fix are direction, not product, and appear only in What's next (§6.10).
+- Bullets: `spend` "A budget for every team, on reconciled cost." · `clock` "Forecast to month end from current pace." · `alerts` "Alerts by email or Slack when a team is on pace to go over."
 - Proof: "Uber spent its 2026 AI coding budget in four months." (TechStackups)
-- Visual: `Card` "Spend against budget" (`LineChart`, 2 series: "Spend, cumulative" `chart-1` and "Budget" `chart-2`, September, `area` on the first only). `Ring` value 92, label "Budget used". `Card` "Alerts": three rows, each with a `Badge` (`negative` with `alerts` icon "Over 90%", `neutral` "Spike", `accent` "Fix available"), the message and a date (`caption`).
+- Visual: `Card` "Spend against budget" (`LineChart`, 2 series: "Spend, cumulative" `chart-1` and "Budget" `chart-2`, September, `area` on the first only). `Ring` value 92, label "Budget used". `Card` "Alerts": three rows, each with a `Badge` (`negative` with `alerts` icon "Over 90%", `neutral` "Spike", `neutral` "Variance"), the message and a date (`caption`).
 - Takeaway: "On pace, September closes at 92% of budget. Engineering crossed 90% on the 24th."
 
 ### 6.8 How it works (`#how-it-works`)
 
 - Overline `HOW IT WORKS`. `h2` "Connect once. Receipts from then on."
-- **Three steps** in a row on wide and regular, stacked on compact. Each is a numbered `overline` ("01"), a 24 px icon (`connect`, `telemetry`, `alerts`), a `headline` and a `body` line:
-  1. **Connect.** "Connect your AI vendors with an admin key and your work tools with a sign-in. Connections are read-only." **[Verify]**
-  2. **Attribute.** "Ambiently matches every request to a person, a team and a task, and prices it." **[Verify]**
-  3. **Act.** "Set budgets, get alerts and export receipts to finance." **[Verify]**
+- **Three steps** in a row on wide and regular, stacked on compact. Each is a numbered `overline` ("01"), a 24 px icon (`connect`, `telemetry`, `check`), a `headline` and a `body` paragraph of two or three short sentences:
+  1. **Connect.** "Each person runs one command, or IT pushes it to managed laptops. From the next session, Claude Code, Codex and Cursor report to Ambiently on the sign-ins people already have. Connect your vendors' billing and your work tools once." (§2.4, P10: one command **[Built]**, managed laptops **[Planned]**, billing and work tools **[Planned]**)
+  2. **Attribute.** "Ambiently matches every request to a person, a team and a task, and prices it. Each task gets a title and a status from evidence: tests passed, PR opened, deployed. Nobody tags anything." (P1, P3, P4 **[Built]**)
+  3. **Reconcile.** "Estimates are reconciled to each vendor's bill every day. Set budgets, get alerts and export to finance as CSV or FOCUS." (P6, P8 **[Planned]**)
+- Under the steps, one line in `caption`, `ink-muted`: "Tracking never holds up a request, and your AI tools keep their own sign-ins." (P10, P11 **[Built]**)
 - **Diagram** (inline SVG, `role="img"` with an `aria-label` describing it):
-  - Left column: the five `role: 'spend'` symbols, headed "Where tokens are spent".
+  - Left column: the symbols of every integration whose `roles` include `'spend'` (five), headed "Where tokens are spent".
   - Centre: the Ambiently mark at 64 px.
-  - Right column: the three `role: 'context'` symbols, headed "Where work is tracked".
+  - Right column: the symbols of every integration whose `roles` include `'context'` (four: GitHub, Jira, monday.com, Notion), headed "Where work is tracked". GitHub appears in both columns, because Copilot spends tokens and pull requests and deploys show where the work stands.
   - Connectors are 1 px `line-strong` at 60%, drawn as gentle curves.
   - The diagram is generated from `site.integrations`, so adding an integration updates it.
   - **Motion:** when it enters view, dots of light (4 px, `accent` on dark, `chart-1` on light) travel once along each connector into the centre, then out to the right. Three waves, 1.6 s in total, then everything stays still (§8.4).
@@ -572,33 +670,61 @@ This chapter is the answer to the footer question.
 ### 6.9 Trust (`#trust`)
 
 - Overline `PRIVACY`. `h2` "Quiet by design."
-- Four points in a 2 × 2 grid (4 × 1 on wide). Each has a 24 px icon, a `headline` and a `body` line. **Every point is [Verify] and is cut if the product doesn't do it:**
-  - `security` **Metadata only.** "Ambiently records tokens, models, costs and timestamps. Prompts and responses stay with your vendors."
-  - `connect` **Read-only connections.** "Ambiently reads usage. It never changes anything in your tools."
-  - `people` **Team-level by default.** "People see team totals unless an admin turns on individual views."
-  - `download` **Yours to export.** "Export receipts as CSV whenever you want."
+- Lede (`body-large`, `ink-secondary`): "Ambiently sees AI requests so it can tell what they were for. It shows people what they need, keeps the rest locked away, and never gets in the way of the work."
+- Four points in a 2 × 2 grid (4 × 1 on wide). Each has a 24 px icon, a `headline` and a `body` line:
+  - `security` **Summaries, not prompts.** "Teams see what each task did, not what was typed. Prompts stay hidden unless a team chooses to show them, and every view is logged." (§2.4, P12) **[Built]**
+  - `storage` **Secrets masked, content expires.** "Keys, tokens and passwords are masked before anything is stored. Raw content is encrypted and deleted after 30 days, or never kept at all." (P13) **[Built]**
+  - `cloud` **Hosted or in your cloud.** "Use Ambiently hosted, or deploy it in your own cloud account, next to the AI tools it tracks." (P15) **[Planned]**
+  - `connect` **Never in the way.** "Tracking never holds up a request. If tracking stops, your AI tools keep working." (P11) **[Built]**
+- **Why the earlier draft's points were replaced:** the product does see prompts and responses, because that's how it tells which task a request belongs to, so "metadata only" was untrue. It sits in the request path rather than reading usage afterwards, so "read-only connections" didn't fit either. "Team-level by default" became the Teams chapter's no-leaderboards bullet, and export moved to How it works.
 - No compliance badges (SOC 2 and the like) unless they are real and current.
 
-### 6.10 FAQ (`#faq`)
+### 6.10 What's next (`#whats-next`)
+
+This is the one place the page shows direction rather than product. Everything in it is tagged **[Beyond product spec]**: Ben confirmed each item on Oct 13, 2026 as where Ambiently is going, and none of them is in the product or the product spec yet. The section's own copy says so, and no other section describes these as things Ambiently does (§2.4).
+
+**Content**
+
+- Overline `WHAT'S NEXT`. `h2` (`title-1`): "Coming next."
+- Lede (`body-large`, `ink-secondary`): "Receipts are the start. These are next on the plan. None of them ships yet."
+- Four `Card`s in a 2 × 2 grid (4 × 1 on wide). Each has a 24 px icon, an `h3` title (`headline`), a `body` line and `Badge tone="neutral"` reading "Planned" in the action slot:
+  - `storage` **Savings with a figure on each fix.** "Prompt caching gaps, idle seats across Cursor, GitHub Copilot and Microsoft Copilot, and the monthly saving from fixing each one."
+  - `model` **Models matched to the work.** "Where a large model is doing a small model's job, and what the right model would have cost."
+  - `spend` **Budgets by vendor and project.** "Budgets on more than teams, with alerts at the thresholds you choose."
+  - `alerts` **Alerts that name the fix.** "Not just a spike, but what to do about it: prompt caching is off for three Anthropic keys, and here is what turning it on saves."
+- Caption under the grid (`caption`, `ink-muted`): "Tell us which of these matters to you." The sentence links to `#request-access`.
+- No chart, no sample data and no figures, so nothing here carries a "Sample data" badge.
+
+**Rules**
+
+- The copy never uses the present tense as if a feature exists. "Next", "will" and "planned" are the words.
+- The "Planned" badge is a visitor-facing label and doesn't change the ledger: these rows stay **[Beyond product spec]** in Appendix D until the product spec plans them. When one ships, move it into the chapter it belongs to and retag it.
+- A unit test asserts that the four claims' key phrases ("idle seats", "model routing", "budgets by vendor", "fix available", "the right model") appear in `content/landing.ts` only inside the What's next block (§16.2).
+
+**Layout:** heading and lede centred, max 640 px. Cards use `space-4` gutters. **Motion:** section text and cards reveal as in §8.4; nothing else.
+
+### 6.11 FAQ (`#faq`)
 
 - Overline `FAQ`. `h2` "Questions and answers."
 - Native `<details>`/`<summary>` elements. They are accessible, work without JS, and their content is in the HTML for crawlers. Open and close animate height with `interpolate-size: allow-keywords` and `::details-content` transitions where the browser supports them. Unsupported browsers and Reduce Motion get an instant toggle. No GSAP here.
 - `summary` is styled `headline` with a `chevron-down` that rotates 180° (120 ms). Each answer is `body`, `ink-secondary`. Rows are separated by `line` hairlines.
-- Questions (from `content/faq.ts`; answers marked **[Verify]** need confirmation):
-  1. **What is Ambiently?** "Ambiently is AI spend tracking. It collects usage and cost from your AI vendors, ties each token to the person, team and task behind it, and shows it all on one dashboard."
-  2. **Which tools does Ambiently work with?** Generated from `site.integrations`, grouped by role: "AI spend from Anthropic, Microsoft, Cursor, OpenAI and GitHub. Work context from Jira, monday.com and Notion. More are on the way." **[Verify]**
-  3. **How is this different from the usage dashboards my AI vendors provide?** "Each vendor shows its own usage. Ambiently joins them, adds coding tools like Cursor and GitHub Copilot, and ties the spend to the work in Jira, monday.com and Notion."
-  4. **Does Ambiently read our prompts or responses?** "No. Ambiently collects metadata: token counts, models, costs, timestamps, and who or what made the request." **[Verify]**
-  5. **Is this employee monitoring?** "Ambiently is built to understand cost, not to watch people. Views are team-level by default, and Ambiently doesn't store prompt content." **[Verify]**
-  6. **Who is Ambiently for?** "Finance, IT and engineering leaders at companies that spend anywhere from a few thousand to a few million dollars a month on AI."
-  7. **How much does it cost?** "Pricing is set during early access. Tell us your company size and AI spend in the form and we'll share it." **[Verify]**
-  8. **How long does setup take?** **[Verify]** Cut this question if there's no honest answer.
+- Questions (from `content/faq.ts`). The tags and P-numbers are spec annotations for Appendix D and never appear on the page:
+  1. **What is Ambiently?** "Ambiently is AI spend tracking. It records every AI request your teams make, ties it to the person, team and task behind it, and reconciles the total to your vendors' bills." (P1, P3 **[Built]**; P6 **[Planned]**)
+  2. **Which tools does Ambiently work with?** Generated from `site.integrations`, grouped by role, plus OpenCode: "Coding agents first: Claude Code, Codex, Cursor and OpenCode, with GitHub Copilot next. AI spend from Anthropic, Microsoft, Cursor, OpenAI and GitHub. Work context from GitHub, Jira, monday.com and Notion. More are on the way." (statuses per tool in the §6.3 table)
+  3. **How is this different from the usage dashboards my AI vendors provide?** "Each vendor shows its own usage, by key or by seat. Ambiently joins them, and goes a step further: it turns each AI session into a task, so you can see what a piece of work cost and whether it shipped." (P3, P4 **[Built]**)
+  4. **Does Ambiently read our prompts?** "It sees them as requests pass through, because that's how it tells which task a request belongs to. A small model writes each task's title and summary from a short digest, never the full transcript. Secrets are masked before anything is stored, raw content is encrypted and deleted after 30 days by default, and people see summaries rather than prompts unless their team chooses otherwise." (P3, P12, P13 **[Built]**)
+  5. **Is this employee monitoring?** "No. Ambiently is built to understand cost and progress, not to watch people. Teams see summaries rather than prompts, nobody is ranked on a leaderboard, and each person can see everything collected about their own work." (P12 summaries **[Built]**; leaderboards P14 and the view of one's own data **[Planned]**)
+  6. **Does Ambiently slow down our AI tools?** "Not noticeably. Requests stream straight through to the vendor, and tracking happens after each one finishes, so it never holds one up. Prompt caching keeps working." (P11 **[Built]**). It doesn't say "No" outright because routed requests do pass through one extra hop. Add "Ambiently adds under 2 ms to a request" only after the product's load test confirms the figure.
+  7. **How long does setup take?** "Minutes. Each person runs one command, or IT pushes the same settings to managed laptops. AI tools keep the sign-ins people already have, and work appears from the next session." (P10: one command **[Built]**, managed laptops **[Planned]**)
+  8. **Where does Ambiently run?** "Where you choose: hosted by Ambiently, or in your own cloud account, next to the AI tools it tracks." (P15 **[Planned]**)
+  9. **Who is Ambiently for?** "Finance, engineering and IT leaders at companies that spend anywhere from a few thousand to a few million dollars a month on AI."
+  10. **How much does it cost?** "Pricing is set during early access. Tell us your company size and AI spend in the form and we'll share it." **[Verify]**
 
-### 6.11 Interest form (`#request-access`)
+### 6.12 Interest form (`#request-access`)
 
 Specified in full in §9. Layout: the section heading and copy on the left (5/12) and the form on the right (7/12) at wide. Stacked at regular and compact, with the form at full content width (max 640 px).
 
-### 6.12 Footer
+### 6.13 Footer
 
 - **Tagline block** at the top of the footer, on `surface-sunken`, with a `line` above it:
   - `site.taglines.footer` set as a `<p>` in `title-1` (fluid, §4.5), max 18 ch per line on wide so it breaks over two or three lines. (It's a statement block, not a section heading.)
@@ -649,7 +775,8 @@ Specified in full in §9. Layout: the section heading and copy on the left (5/12
 | `ch4-teams` | Teams | `BarChart` horizontal | Spend | hover | bars grow |
 | `ch4-concentration` | Teams | `Ring` | — | none | arc fills |
 | `ch4-active` | Teams | `LineChart` + `Stat` | Active users | hover | line draws |
-| `ch5-savings` | Waste | `BarChart` horizontal + `Stat` + `Ring` | Savings | hover | bars grow, count up |
+| `ch5-tasks` | Waste | `BarChart` horizontal | Spend | hover | bars grow |
+| `ch5-cache` | Waste | `BarChart` horizontal + `Ring` | Cache hit rate | hover | bars grow, ring fills |
 | `ch6-budget` | Budgets | `LineChart` + `Ring` | Spend (cumulative), Budget | hover | line draws, ring fills |
 | `ch6-alerts` | Budgets | list with `Badge`s | — | none | rows reveal |
 
@@ -948,9 +1075,10 @@ JSON-LD is rendered as a native `<script type="application/ld+json">` with `JSON
   | Title, `h1` eyebrow, description | AI spend tracking | AI token spend, AI cost tracking |
   | Why, dashboards | AI spend management | AI cost visibility, AI FinOps |
   | Vendors and models | LLM cost monitoring | Claude usage dashboard, OpenAI usage dashboard, Cursor spend, GitHub Copilot cost |
-  | Tasks | AI cost attribution | AI spend by project, AI cost per ticket, Jira AI usage |
+  | Tasks | AI cost attribution | AI spend by project, AI cost per ticket, AI cost per task, Jira AI usage |
+  | How it works, FAQ | coding agent cost tracking | Claude Code cost tracking, Codex usage tracking, Cursor usage by team, AI gateway cost tracking |
   | Teams | AI usage analytics by team | AI spend per employee |
-  | Waste, budgets | reduce AI costs | AI budget alerts, prompt caching savings |
+  | Waste, budgets, What's next | reduce AI costs | AI budget alerts, prompt caching savings |
   | FAQ | (long-tail questions) | |
 
 - The `h1` holds the tagline (Ben's requirement) plus the visible eyebrow "AI spend tracking". No hidden or cloaked text anywhere. The design system's visually hidden data tables mirror visible charts and are an accessibility pattern, not cloaking.
@@ -970,10 +1098,9 @@ Verify the domain in Google Search Console and Bing Webmaster Tools, submit the 
 ### 11.1 Appearance policy
 
 - **Light and dark are both first-class.** Every section, chart, logo and state is designed and tested in both.
-- **The page follows the system appearance** (`prefers-color-scheme`), including Auto switching while the page is open. HIG: *"Avoid offering an app-specific appearance setting… people… may think your app is broken because it doesn't respond to their systemwide appearance choice."* There is **no theme toggle** (`theme.appearance.allowToggle: false`).
-- **No preference reported → dark**, the brand's own appearance.
-- Theming is pure CSS (media queries on generated tokens). No cookie, no inline script and no hydration flash, and the page stays fully static.
-- If Ben ever enables `allowToggle`: the choice is stored in `localStorage`, applied by a tiny inline `<head>` script that sets `data-theme` before paint (allowed by CSP hash), with `suppressHydrationWarning` on `<html>`. It is never stored in a cookie read on the server, which would make every route dynamic under Cache Components. The generated CSS already supports `data-theme` overrides for this.
+- **Dark is the default for everyone** (Ben, Oct 13, 2026, revising the earlier decision): `<html data-theme="dark">` is server-rendered, so the page is dark whatever the system setting says. HIG prefers following the system appearance; Ben chose the brand's own appearance as the default instead.
+- **A header toggle** (`theme.appearance.allowToggle: true`) switches to light and back. It is an `IconButton` with `sun`/`moon` glyphs and the labels "Switch to light appearance" / "Switch to dark appearance". The choice is kept in `localStorage` under `theme.appearance.storageKey` and applied by a tiny inline `<head>` script before first paint, with `suppressHydrationWarning` on `<html>`. It is never a cookie read on the server, which would make every route dynamic under Cache Components. The toggle also updates `<meta name="theme-color">`.
+- The generated CSS keys both themes on `data-theme`; its `prefers-color-scheme` rule only applies when no `data-theme` is set, which never happens on this page.
 
 ### 11.2 Token pipeline
 
@@ -1106,9 +1233,9 @@ components/
     DataTable.tsx format.ts geometry.ts useWidth.ts logo-dots.ts index.ts
   sections/                  # one per §6 subsection
     SiteHeader.tsx Hero.tsx IntegrationsMarquee.tsx WhyReceipts.tsx DashboardShowcase.tsx
-    Lens.tsx ValueChapter.tsx HowItWorks.tsx Trust.tsx Faq.tsx InterestSection.tsx SiteFooter.tsx
+    Lens.tsx ValueChapter.tsx HowItWorks.tsx Trust.tsx WhatsNext.tsx Faq.tsx InterestSection.tsx SiteFooter.tsx
   dashboards/                # composed visuals
-    HeroReceipt.tsx OverviewDashboard.tsx ReceiptsTable.tsx AlertsList.tsx chapters/*.tsx
+    HeroReceipt.tsx InsightsDashboard.tsx ReceiptsTable.tsx AlertsList.tsx chapters/*.tsx
   forms/InterestForm.tsx     # 'use client' (useActionState)
   motion/                    # 'use client'
     gsap.ts MotionProvider.tsx Reveal.tsx useChartReveal.ts CountUp.tsx HalftoneSun.tsx Marquee.tsx
@@ -1146,7 +1273,7 @@ tests/   unit/*.test.ts  e2e/*.spec.ts
   - The charts.
   - `Marquee`, `Lens`, `InterestForm`, `HalftoneSun`.
   - The header's CTA-state controller.
-- Props across the boundary are serializable: fixtures and copy, never functions. Chart `format` functions are replaced by a serializable `format: 'currency' | 'compact' | 'tokens'` key resolved on the client.
+- Props across the boundary are serializable: fixtures and copy, never functions. Chart `format` functions are replaced by a serializable `format: 'currency' | 'compact' | 'tokens' | 'percent'` key resolved on the client.
 
 ### 13.7 Environment variables
 
@@ -1178,7 +1305,7 @@ Why `'unsafe-inline'`: the App Router streams its payload in inline `<script>` t
 
 ## 14. Analytics
 
-- **Cookieless and privacy-friendly only** (for example Vercel Web Analytics or Plausible), chosen in `site.analytics.provider` (`'none'` by default until Ben picks one, §17). No cookie banner should then be needed; confirm with legal for EU traffic.
+- **Cookieless and privacy-friendly only** (for example Vercel Web Analytics or Plausible), chosen in `site.analytics.provider`. Confirmed by Ben on Oct 13, 2026 as specified here: `'none'` at launch, and only a cookieless provider if one is added later (§17, question 10). No cookie banner should then be needed; confirm with legal for EU traffic.
 - Events (`lib/analytics.ts`, no PII):
   - `cta_click {location}`
   - `form_start`, `form_submit`, `form_success`, `form_error {kind}`
@@ -1217,7 +1344,9 @@ The page is done when every item below holds on the production build.
 **Copy and config**
 - [ ] The hero `h1` and footer tagline match §4.1 character for character and come from `site.taglines`.
 - [ ] No brand name, tagline or description is hard-coded outside `config/` and `content/` (the unit test in §3.4 passes).
-- [ ] Every **[Verify]** item is confirmed against `~/ambient-work` or cut; every third-party figure has a primary source in `content/sources.ts`.
+- [ ] Appendix D is re-checked against `~/ambient-work` at launch. Every **[Built]** claim still holds. Every **[Planned]** claim is still in the product's plan. Every **[Beyond product spec]** claim appears only in What's next (§6.10), framed as not yet built, and nowhere else.
+- [ ] Every **[Verify]** item is confirmed or cut. Every third-party figure has a primary source in `content/sources.ts`, and every first-party figure names its product spec section there (§6.4).
+- [ ] The page never says "Ambient Work", "router", "proxy", "harness" or "LiteLLM" (§2.3). A unit test greps `content/` for them.
 
 **Design system and HIG**
 - [ ] The design system is used throughout: tokens only, ported components, chart rules, voice. `components/ds/CHANGES.md` lists every extension.
@@ -1250,10 +1379,11 @@ The page is done when every item below holds on the production build.
 ### 16.2 Tests
 
 **Unit (Vitest)**
-- Fixture sums: each lens = $128,400, receipts reconcile, deltas and takeaways compute to the strings in `content/`.
+- Fixture sums: each lens = $128,400, receipts reconcile, the cache hit rate's weighted total is 41%, ENG-1423's cost is the same in B.6 and B.8, and deltas and takeaways compute to the strings in `content/`.
+- The What's next containment check: the beyond-spec phrases appear only in that block (§6.10).
 - `format.compact` parity with the design system.
 - Zod schema cases.
-- The no-hard-coded-copy check.
+- The no-hard-coded-copy check, plus the banned-vocabulary check (§2.3).
 - Token generation is stable.
 
 **E2E (Playwright: Chromium, WebKit and Firefox)**
@@ -1294,16 +1424,26 @@ The page is done when every item below holds on the production build.
 
 ### Decisions for Ben
 
-1. **Product facts.** Everything tagged **[Verify]**: integration roles and status, metadata-only collection, read-only connections, attribution to tasks, alert channels, savings recommendations, pricing and setup time. These need `~/ambient-work`.
-2. **Domain, legal name, contact email, social handles** for `config/site.ts`.
-3. **Work email in the form.** Ben's brief lists what the visitor wants, company size and AI spend. This spec adds a required work email so there's someone to reply to. Confirm, or name the alternative. Also choose where leads go (webhook to Slack or CRM, or email) and the hosting platform (it decides the rate-limit store).
-4. **Footer tagline wording.** "Do you know what tasks are your employees using AI for?" is kept verbatim. The standard indirect-question order would be "Do you know what tasks your employees are using AI for?" Keep or change?
-5. **Hero tagline punctuation.** "AI tokens are money, you want receipts, right?" is kept verbatim (comma splice, question form). It intentionally breaks the design system's "short declaratives" voice rule, which is fine as a sanctioned exception.
-6. **Logo permissions.** Using third-party logos needs each company's guidelines followed, and some (Microsoft in particular) restrict logo use without a licence or partner status. Legal review is needed before launch. The fallback is to set the names in Inter as text in the marquee.
-7. **Theme toggle.** None, per HIG. Confirm.
-8. **Yellow.** The design system flags an open choice between Ambient Yellow `#ffe600` (UI accent) and the mark's gold `#f9bb01` (logo). This spec follows the design system as it stands: `accent` for UI, `gold` for the logo.
-9. **Competitor-sourced figures.** Some of the research's strongest numbers come from Ramp and other competitors. This spec avoids citing competitors. Confirm, or approve specific figures.
-10. **Analytics provider** (or none).
+Status on Oct 13, 2026: questions 1, 4, 5, 7, 8, 9, 10, 11 and 12 are decided. Questions 2, 3, 6 and 13 are deferred until after implementation; each says what to build in the meantime. None of them blocks the build order in §16.3, and the deferred ones are re-raised at step 7 (hardening), before launch.
+
+1. **Claims beyond the product spec.** *Decided Oct 13, 2026:* all four are confirmed as direction and kept, but only in the What's next section (§6.10), whose copy says none of them ships yet. The Waste, Budgets and Vendors chapters and the B.9 alerts now use grounded copy. The items stay **[Beyond product spec]** in Appendix D until the product spec plans them, and should be added to it when it is next updated:
+   - savings recommendations with a monthly figure on each fix: idle seats, caching gaps, model routing
+   - budgets by vendor or project, and thresholds people choose
+   - models that cost more than the work needs
+   - alerts that name a fix (the former "Fix available" alert)
+   *Also decided Oct 13, 2026:* monday.com, Notion and Microsoft Copilot are in, tagged **[Planned]**. Usage inside the ChatGPT and Claude apps is out for now and isn't claimed anywhere (§2.4).
+2. **Domain, legal name, contact email, social handles** for `config/site.ts`. *Deferred (Ben, Oct 13, 2026):* build with the placeholders in §3.2 and the `[Verify]` tags on them. They are launch blockers under §16.1, not build blockers.
+3. **Work email in the form.** Ben's brief lists what the visitor wants, company size and AI spend. This spec adds a required work email so there's someone to reply to. Confirm, or name the alternative. Also choose where leads go (webhook to Slack or CRM, or email) and the hosting platform (it decides the rate-limit store). *Deferred until after implementation (Ben, Oct 13, 2026):* build the form as specified in §9, with the work email required, the sink adapter running `console` in development and the in-memory rate-limit store. Delivery, hosting and the production store are decided before launch.
+4. **Footer tagline wording.** *Decided Oct 13, 2026: keep.* "Do you know what tasks are your employees using AI for?" stays verbatim. (The standard indirect-question order would be "Do you know what tasks your employees are using AI for?")
+5. **Hero tagline punctuation.** *Decided Oct 13, 2026: keep.* "AI tokens are money, you want receipts, right?" stays verbatim (comma splice, question form), a sanctioned exception to the design system's "short declaratives" voice rule.
+6. **Logo permissions.** Using third-party logos needs each company's guidelines followed, and some (Microsoft in particular) restrict logo use without a licence or partner status. Legal review is needed before launch. The fallback is to set the names in Inter as text in the marquee. *Deferred until after implementation (Ben, Oct 13, 2026):* build with the official assets per §6.3 and keep the text fallback behind a flag in the logo index, so legal's answer is a config change.
+7. **Theme toggle.** *Revised Oct 13, 2026: dark is the default for everyone and the header has a toggle* (§11.1). The earlier decision (none, per HIG) is superseded.
+8. **Yellow.** *Decided Oct 13, 2026: yes,* as the design system stands: Ambient Yellow `#ffe600` (`accent`) for UI, the mark's gold `#f9bb01` (`gold`) for the logo.
+9. **Competitor-sourced figures.** *Decided Oct 13, 2026: approved.* Figures from Ramp, Rippling and other competitors may be cited, attributed by name like any other source (§6.4). The Rippling figure in the Teams chapter stays. The research's Ramp AI Index figures are listed as approved in Appendix C; add one to the page only where it earns its place.
+10. **Analytics provider.** *Decided Oct 13, 2026: as specified* (§14): `'none'` at launch, cookieless only if one is added.
+11. **Product name.** *Decided Oct 13, 2026: Ambiently.* The repository and its spec still say *Ambient Work*, an internal name. Update the product spec's title when it is next revised. The page only ever says Ambiently (§0.2).
+12. **Self-hosted or hosted.** *Decided Oct 13, 2026: both.* Customers choose either one (§2.4, P15), and the Trust section and FAQ 8 say so. This settles the product spec's open question about a hosted version, so it should be updated to match. The interest form doesn't ask which one a prospect wants; the reply asks. *Deferred until after implementation (Ben, Oct 13, 2026):* no field now; add an optional one only if sales asks for it.
+13. **How much to lead with coding agents.** The product's deepest coverage is coding agents (Claude Code, Codex, Cursor, OpenCode), and the page now names them in How it works, the receipt and the FAQ. The hero and the sample data still present company-wide AI spend, with marketing, support and legal teams. Keep that balance, or lean the hero receipt and fixtures further toward engineering? *Deferred until after implementation (Ben, Oct 13, 2026):* build with the balance as written and revisit on the finished page.
 
 ### Gaps logged for the design system
 
@@ -1315,6 +1455,10 @@ The page is done when every item below holds on the production build.
 6. **Text input and textarea components**, which the design system lacks. The form styles them from `Select`'s rules (§9.3).
 7. **Theming by `prefers-color-scheme`**: the design system's `tokens.css` switches only on `data-theme`.
 8. **Higher-contrast token variants** for `prefers-contrast: more` (§11.3, row 7).
+9. **`BarChart` marks ranked charts** with `data-horizontal` so motion code can tell bars that grow sideways from columns (found during implementation; `components/ds/CHANGES.md`).
+10. **`Stat.value` accepts a node**, so a counting element can stand in for the number without changing the DOM (`CHANGES.md`).
+11. **Ranked bar charts need a responsive category column.** The design system's `labelWidth` is fixed; the page wraps `BarChart` in `RankedBars`, which picks the column width and shorter labels from the measured width (`content/short-labels.ts`).
+12. **Column charts need short x labels.** Four 7-day labels collide below about 320 px of chart width; the page strips the month from them. A thinning rule based on measured label width would fix it in the chart itself.
 
 ---
 
@@ -1328,16 +1472,18 @@ Example Co. is a fictional 340-person software company. Sample "today" is 2026-0
 
 ### B.1 Hero receipt — today
 
-| Task | Source | Team | Model / tool | Tokens | Cost |
-|---|---|---|---|---|---|
-| ENG-1423 Refactor billing service | Jira | Engineering | Claude Sonnet (in 2.40M / out 0.31M) | 2.71M | $11.85 |
-| MKT-208 Q4 launch brief | monday.com | Marketing | GPT-5 (in 0.52M / out 0.12M) | 0.64M | $1.85 |
-| Support macros refresh | Notion | Support | Claude Haiku (in 1.90M / out 0.40M) | 2.30M | $3.90 |
-| Code review, 14 engineers | Cursor | Engineering | Cursor usage | — | $46.20 |
-| Pull request summaries | GitHub | Engineering | GitHub Copilot premium requests | — | $18.40 |
-| Contract review | Microsoft | Legal | Microsoft Copilot, 625 credits | — | $6.25 |
-| + 1,284 more line items | | | | | |
-| **Total today** | | | | | **$4,218.00**, +12.2% vs yesterday ($3,760) |
+| Task | Tracker | Tool (vendor) | Team | Model | Tokens | Cost | Status |
+|---|---|---|---|---|---|---|---|
+| ENG-1423 Refactor billing service | Jira | Claude Code (Anthropic) | Engineering | Claude Sonnet (in 2.40M / out 0.31M) | 2.71M | $11.85 | Tested |
+| MKT-208 Write Q4 launch brief | monday.com | OpenAI API (OpenAI) | Marketing | GPT-5 (in 0.52M / out 0.12M) | 0.64M | $1.85 | In progress |
+| Refresh support macros | Notion | Claude API (Anthropic) | Support | Claude Haiku (in 1.90M / out 0.40M) | 2.30M | $3.90 | In progress |
+| ENG-1388 Fix flaky checkout tests | Jira | Cursor (Cursor) | Engineering | Cursor usage | — | $46.20 | Deployed |
+| Summarize release pull requests | — | GitHub Copilot (GitHub) | Engineering | Copilot premium requests | — | $18.40 | Completed |
+| Review vendor contract | — | Microsoft Copilot (Microsoft) | Legal | 625 credits | — | $6.25 | In progress |
+| + 1,284 more line items | | | | | | | |
+| **Total today** | | | | | | **$4,218.00**, +12.2% vs yesterday ($3,760) | |
+
+Titles are imperative phrases, as the product writes them (§2.4, P3), and statuses use the product's labels (P4). Tasks with no code to test or ship (rows 2, 3 and 6) show In progress, the status the product gives any task with activity and no evidence yet. Status from a linked ticket would be **[Beyond product spec]**, so the fixtures don't show any. ENG-1388's $46.20 today is part of its $138.20 month to date (B.6).
 
 Illustrative unit prices, per million tokens, used only to compute the fixtures (never shown on the page): Claude Sonnet in $3 / out $15 · Claude Haiku in $1 / out $5 · Claude Opus in $5 / out $25 · GPT-5 in $1.25 / out $10 · GPT-5 mini in $0.25 / out $2. Microsoft Copilot credits at $0.01. Update these to public list prices when the fixtures are refreshed.
 
@@ -1347,7 +1493,7 @@ Illustrative unit prices, per million tokens, used only to compute the fixtures 
 
 | Tile | Value | Delta | Extra |
 |---|---|---|---|
-| Spend this month (**hero**) | $128,400 → "$128K" | −8.2% vs August (`upIsGood: false`) | — |
+| Spend this month (**hero**) | $128,400 → "$128K" | −8.2% vs August (`upIsGood: false`) | caption "Reconciled through Sep 29. Today is estimated." |
 | Spend today | $4,218 | +12.2% vs yesterday (`upIsGood: false`) | trend: last 12 days of B.4 |
 | Tokens today | 684M | +9.1% vs yesterday (627M) | — |
 | Active users | 291 | +2.5% vs last week (284) | caption "86% of employees" |
@@ -1415,17 +1561,17 @@ In the By model column, "Seats" ranks third. It sits in rank order, not last, be
 ### B.6 Tasks
 
 - **Spend by task type:** B.3 "By task".
-- **Recent receipts** (month to date):
+- **Task receipts** (month to date):
 
-| Task | Source | Team | Model or tool | Tokens | Cost | How the cost is made up |
-|---|---|---|---|---|---|---|
-| ENG-1423 Refactor billing service | Jira | Engineering | Claude Sonnet, Cursor | 41.2M | $612.40 | Sonnet in 36.0M ($108.00) + out 5.2M ($78.00) + Cursor usage $426.40 |
-| ENG-1388 Fix flaky checkout tests | Jira | Engineering | Cursor | — | $138.20 | Cursor usage |
-| MKT-208 Q4 launch brief | monday.com | Marketing | GPT-5 | 6.8M | $19.00 | in 5.6M ($7.00) + out 1.2M ($12.00) |
-| Customer FAQ refresh | Notion | Support | Claude Haiku | 9.4M | $15.80 | in 7.8M ($7.80) + out 1.6M ($8.00) |
-| Board update, September | Notion | Finance and ops | Microsoft Copilot | — | $30.00 | 3,000 credits |
+| Task | Tracker | Team | Model or tool | Tokens | Cost | Status | How the cost is made up (fixture only) |
+|---|---|---|---|---|---|---|---|
+| ENG-1423 Refactor billing service | Jira | Engineering | Claude Code (Claude Sonnet), Cursor | 41.2M | $612.40 | Tested | Sonnet in 36.0M ($108.00) + out 5.2M ($78.00) + Cursor usage $426.40 |
+| ENG-1388 Fix flaky checkout tests | Jira | Engineering | Cursor | — | $138.20 | Deployed | Cursor usage |
+| MKT-208 Write Q4 launch brief | monday.com | Marketing | OpenAI API (GPT-5) | 6.8M | $19.00 | In progress | in 5.6M ($7.00) + out 1.2M ($12.00) |
+| Refresh customer FAQ | Notion | Support | Claude API (Claude Haiku) | 9.4M | $15.80 | In progress | in 7.8M ($7.80) + out 1.6M ($8.00) |
+| Draft September board update | Notion | Finance and ops | Microsoft Copilot | — | $30.00 | In progress | 3,000 credits |
 
-Store the in/out split in the fixture and compute each cost from the B.1 unit prices, so the test in §16.2 can check every row.
+Store the in/out split in the fixture and compute each cost from the B.1 unit prices, so the test in §16.2 can check every row. ENG-1423 shows one task paid for by two tools. The product sums a task's cost across every tool and contributor (§2.4, P5), and this row is the page's one example of that.
 
 ### B.7 Teams
 
@@ -1437,13 +1583,29 @@ Store the in/out split in the fixture and compute each cost from the B.1 unit pr
 
 ### B.8 Waste
 
-- **Savings by fix** (monthly):
-  - Turn on prompt caching for 3 API keys: 4,900
-  - Route summaries to a smaller model: 3,700
-  - Remove 22 idle seats: 2,600
-  - Cap long-context retries: 1,100
-- **Total:** $12,300 = 9.6% of $128,400.
-- **Cache hit rate:** 41%.
+- **Most expensive tasks** (September, month to date, USD), ranked:
+
+  | Task | Team | Cost |
+  |---|---|---|
+  | ENG-1297 Migrate search to the new index | Engineering | 1,840 |
+  | ENG-1310 Rebuild onboarding flow | Engineering | 1,420 |
+  | SUP-77 Answer the September ticket backlog | Support | 980 |
+  | ENG-1423 Refactor billing service | Engineering | 612.40 |
+  | ENG-1352 Add usage-based invoicing | Engineering | 590 |
+
+  Together $5,442.40, 4.2% of September spend. ENG-1423 is the same task as in B.1 and B.6, and its cost MUST stay equal across the three (tested, §16.2).
+
+- **Cache hit rate by tool** (September, prompt tokens in millions; hit rate = served from cache ÷ prompt tokens). Tools that report only totals (Cursor, GitHub Copilot, Microsoft Copilot) are left out:
+
+  | Tool | Prompt tokens | Served from cache | Hit rate |
+  |---|---|---|---|
+  | Claude Code | 7,400 | 4,070 | 55% |
+  | Codex | 4,600 | 1,840 | 40% |
+  | Claude API | 3,000 | 840 | 28% |
+  | OpenAI API | 1,800 | 180 | 10% |
+  | **All tools** | **16,800** | **6,930** | 41.25% → "41%" |
+
+  Store prompt and cached tokens in the fixture and compute every rate, including the 41% shown by this chapter's ring and by the product shot's health ring (B.2), so the test in §16.2 can check them.
 
 ### B.9 Budgets
 
@@ -1453,7 +1615,7 @@ Store the in/out split in the fixture and compute each cost from the B.1 unit pr
 - **Alerts:**
   1. `negative` "Over 90%": "Engineering passed 90% of its September budget." Sep 24
   2. `neutral` "Spike": "Cursor spend rose 38% week over week." Sep 18
-  3. `accent` "Fix available": "Prompt caching is off for 3 Anthropic keys." Sep 12
+  3. `neutral` "Variance": "OpenAI's August bill was 5.4% over the estimate. Totals now match the bill." Sep 3. This is the product's own reconciliation alert, which fires above 5% (§2.4, P6) **[Planned]**. (The earlier "Fix available" alert is direction, not product, and lives in What's next, §6.10.)
 
 ## Appendix C. Third-party figures to source before launch
 
@@ -1469,3 +1631,65 @@ Every figure here comes from `spec/research/AI Spend Intelligence Market Analysi
 | 26% of AI spend estimated wasted | Harness |
 | $10K a month leak from missing prompt caching at AngelList | SiliconANGLE |
 | Uber spent its 2026 AI coding budget in four months | TechStackups |
+
+**Competitor-sourced figures, approved by Ben on Oct 13, 2026** (§17, question 9). Rippling's figure above is one of them. The research also offers these from Ramp, which may be used where a section needs them, under the same sourcing rules:
+
+| Figure | Research attribution |
+|---|---|
+| 56.1% of the 70,000+ US businesses on Ramp paid for AI in August 2026 | Ramp AI Index, on FRED |
+| Finance and insurance firms 73.7%, information firms 80.9%, paying for AI on Ramp in August 2026 | Ramp AI Index, on FRED |
+
+## Appendix D. Product claims ledger
+
+Every claim the page makes about what Ambiently does, with its status in `~/ambient-work` on Oct 13, 2026. "P" numbers refer to §2.4, and section names to the product spec. Re-check this table at launch (§16.1). When a **[Planned]** item ships, change it to **[Built]**. When Ben confirms a **[Beyond product spec]** item, change it to **[Planned]**, note "confirmed by Ben" in the Basis column, and add it to the product spec the next time that spec is updated.
+
+| Where | Claim | Tag | Basis |
+|---|---|---|---|
+| Hero lede | Every token tied to the person, model and task | [Built] | P1, P3 |
+| Hero lede | "Nobody has to tag anything." | [Built] | P3 |
+| Hero receipt | "Live" | [Built] | Kanban dashboard: live updates over server-sent events |
+| Hero receipt, B.6 | Claude Code, Claude API, OpenAI API, Cursor as tools | [Built] | Harness integrations; Cursor built from its documentation, no real session captured yet |
+| Hero receipt | GitHub Copilot as a tool | [Planned] | Remaining work, step 26 |
+| Hero receipt, B.6 | Microsoft Copilot as a tool | [Planned] | Confirmed by Ben, Oct 13, 2026; not yet in the product spec |
+| Hero receipt, B.6 | Tasks linked to Jira | [Planned] | P16; Jira sync after GA |
+| Hero receipt, B.6 | Tasks linked to monday.com and Notion | [Planned] | Confirmed by Ben, Oct 13, 2026; not yet in the product spec |
+| Hero receipt, B.6 | Task statuses (Tested, Completed, Deployed) | [Built] | P4 |
+| Marquee | What each logo stands for | mixed | §6.3 table |
+| Product shot | The Insights view, with four headline numbers | [Planned] | P19; Dashboard experience, Insights |
+| Product shot | Sidebar labels Home, Board, Planning, Setup, Settings | [Built] | P19 |
+| Product shot, Spend over time | "Reconciled to the vendor's bill"; Reconciled and Estimated labels | [Planned] | P6 |
+| Product shot, How it works | Export as CSV or FOCUS | [Planned] | P8 |
+| Lens | The same total split by vendor, model, team and task | [Built] (data); [Planned] (view) | Every call row records model, provider, person, team and task; the Insights charts are planned |
+| Spend over time | Forecast to month end | [Planned] | P8 |
+| Vendors and models | Spend by vendor, model, tool and token type | [Built] (data); [Planned] (view) | Data model, `call` |
+| Vendors and models | Plan seats valued at list price | [Built] (pricing); [Planned] (label) | P7 |
+| Vendors and models | The most expensive tasks, and the model behind each one | [Planned] | P19, Insights |
+| Vendors and models | Cost matched Claude Code's own figure to seven decimal places | [Built] | P17 (first-party) |
+| Tasks | Every session becomes a task, titled and costed automatically | [Built] | P3, P5 |
+| Tasks | Status from evidence: tests passed, PR opened, deployed | [Built] from what the agent ran; [Planned] from GitHub | P4 |
+| Tasks | Spend not linked to a task is shown, not hidden | [Built] | P2 |
+| Teams | Spend counted for the team whose work it was | [Built] | P1 |
+| Teams | Active users and cost per active user | [Planned] | Insights |
+| Teams | No leaderboards; per-person views opt-in for admins | [Planned] | P14 |
+| Waste | The ten most expensive tasks, one click from their sessions | [Planned] | P19, Insights |
+| Waste | Cache reads and writes recorded on every request | [Built] | Data model, `call` |
+| Waste | Ambiently's own model use on its own line, capped at 2% | [Built] (line); [Planned] (cap) | P5 |
+| Waste | Claude Code's 14,500 extra tokens a call, fixed by setup | [Built] | P18 (first-party) |
+| Budgets | Team budgets and forecasts | [Planned] | P8 |
+| Budgets | Alerts by email or Slack | [Planned] | P9 |
+| Budgets | Variance alert when the bill differs from the estimate by more than 5% | [Planned] | P6 |
+| What's next | Savings recommendations with a figure on each fix: caching gaps, idle seats, model routing | [Beyond product spec] | Confirmed by Ben as direction, Oct 13, 2026; shown as not yet built (§6.10) |
+| What's next | Models matched to the work | [Beyond product spec] | Confirmed by Ben as direction, Oct 13, 2026; shown as not yet built (§6.10) |
+| What's next | Budgets by vendor or project; thresholds people choose | [Beyond product spec] | Confirmed by Ben as direction, Oct 13, 2026; shown as not yet built (§6.10) |
+| What's next | Alerts that name a fix | [Beyond product spec] | Confirmed by Ben as direction, Oct 13, 2026; shown as not yet built (§6.10) |
+| How it works | One command per person | [Built] | P10 |
+| How it works | Pushed to managed laptops | [Planned] | P10 |
+| How it works | Tools keep their own sign-ins | [Built] | P10 (Claude Code on a Claude plan, Codex on a ChatGPT plan) |
+| How it works | Billing connected once, reconciled daily | [Planned] | P6 |
+| How it works, Trust, FAQ | Tracking never holds up a request | [Built] | P11. Scope: a tracking failure never fails a request. Routed requests still depend on Ambiently's gateway being up, which the product runs with at least two replicas and targets at 99.9% |
+| Trust, FAQ | Summaries, not prompts; every prompt view logged | [Built] | P12 |
+| Trust, FAQ | Secrets masked; content encrypted and deleted after 30 days, or never stored | [Built] | P13 |
+| Trust, FAQ | Hosted or self-hosted, customer's choice | [Planned] | P15. Self-hosted is in the product spec; hosted confirmed by Ben, Oct 13, 2026 |
+| FAQ | Prompt caching keeps working | [Built] | P11 |
+| FAQ | OpenCode supported | [Built] | Harness integrations |
+| FAQ | Each person can see everything collected about their work | [Planned] | Privacy, security and retention: Transparency |

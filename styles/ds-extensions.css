@@ -1,0 +1,21 @@
+/* Behavioural additions to the ported design-system components (components/ds/CHANGES.md).
+   bundle.css is imported unchanged; everything the port needs beyond it lives here. */
+
+/* Charts never block vertical page scrolling on touch; keyboard focus shows the design-system ring. */
+.amb-chart { touch-action: pan-y; outline: none; }
+.amb-chart:focus-visible { box-shadow: var(--focus-ring); border-radius: var(--radius-md); }
+
+/* Windows high-contrast mode: series take system colours so marks stay readable. */
+@media (forced-colors: active) {
+  .amb-chart .amb-series-1, .amb-chart .amb-series-3 { stroke: CanvasText; fill: CanvasText; }
+  .amb-chart .amb-series-2 { stroke: Highlight; fill: Highlight; }
+  .amb-chart .amb-area { opacity: 0.2; }
+  .amb-chart .amb-grid-line, .amb-chart .amb-baseline, .amb-chart .amb-crosshair { stroke: GrayText; opacity: 1; }
+  .amb-chart .amb-tick, .amb-chart .amb-cat-label, .amb-chart .amb-end-label, .amb-chart .amb-bar-label { fill: CanvasText; }
+  .amb-key.amb-series-1, .amb-key.amb-series-3 { background: CanvasText; }
+  .amb-key.amb-series-2 { background: Highlight; }
+  .amb-spark .amb-spark-line { stroke: CanvasText; }
+  .amb-spark .amb-spark-area, .amb-spark .amb-spark-dot { fill: CanvasText; }
+  .amb-ring .amb-ring-fill { stroke: Highlight; }
+  .amb-ring .amb-ring-track { stroke: GrayText; }
+}

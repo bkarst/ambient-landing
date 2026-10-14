@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ambiently landing page
 
-## Getting Started
+The marketing page for Ambiently, built to `spec/landing-spec.md`. Next.js 16 (App Router, Cache Components), React 19, Tailwind 4 and GSAP 3.15. The whole route prerenders static.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+cp .env.example .env.local   # set NEXT_PUBLIC_SITE_URL; INTEREST_SINK=console in development
+pnpm dev                     # regenerates tokens, then next dev
+pnpm build && pnpm start     # production
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Checks
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm typecheck      # tsc
+pnpm lint           # eslint
+pnpm test           # vitest: fixtures reconcile, copy is centralised, vocabulary, FAQ
+pnpm test:e2e       # playwright (needs `npx playwright install chromium` once)
+pnpm tokens:check   # fails if styles/tokens.generated.css or config/tokens.generated.ts are stale
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Append `?motion=off` to any URL to render final states without animation (tests and screenshots).
 
-## Learn More
+## Where things live
 
-To learn more about Next.js, take a look at the following resources:
+| Path | What |
+|---|---|
+| `config/site.ts`, `config/theme.ts` | Brand, copy that matters, SEO defaults, nav, integrations; appearance and motion tokens |
+| `content/` | Section copy, FAQ, every sample number, citations |
+| `components/ds/` | Typed port of the design system (`spec/ambiently-design-system/`); changes in `CHANGES.md` |
+| `components/sections/`, `components/dashboards/` | One component per section; the product shot and chapter visuals |
+| `components/motion/` | GSAP: provider, reveals, counters, chart choreography, marquee, hero |
+| `components/integrations/logos/` | Logo index. Text fallback until legal signs off on official assets |
+| `lib/interest/`, `app/actions/interest.ts` | The form's schema, rate limit, delivery sink and Server Action |
+| `scripts/build-tokens.mjs` | Generates CSS variables and TS tokens from the design system's `tokens.json` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The spec's open questions and launch blockers are in `spec/landing-spec.md` §17 and §16.1.
